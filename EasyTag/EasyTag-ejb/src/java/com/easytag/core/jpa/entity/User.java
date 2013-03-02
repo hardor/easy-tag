@@ -1,18 +1,22 @@
 package com.easytag.core.jpa.entity;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
  * Entity-class for User
  * @author Student
  */
-@Entity @Table(name="users")
+@Entity
+@Table(name="users")
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -21,9 +25,20 @@ public class User implements Serializable {
     
     @Column(name="first_name", nullable=false)
     private String firstName;
+    
     @Column(name="last_name", nullable=false)
     private String lastName;
-
+    
+    @JoinColumn(name="user_group_id")
+    @ManyToOne
+    private UserGroup userGroup;    
+     
+    @Column(name="status")
+    private int status;
+    
+    @Column(name="extra_info")
+    private String extraInfo;
+    
     public Long getId() {
         return id;
     }
@@ -46,25 +61,49 @@ public class User implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }   
+
+    public UserGroup getUserGroup() {
+        return userGroup;
     }
-    
-    
+
+    public void setUserGroup(UserGroup userGroup) {
+        this.userGroup = userGroup;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getExtraInfo() {
+        return extraInfo;
+    }
+
+    public void setExtraInfo(String extraInfo) {
+        this.extraInfo = extraInfo;
+    }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 7;
+        hash = 13 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof User)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        User other = (User) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final User other = (User) obj;
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
@@ -72,7 +111,8 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "com.easytag.core.jpa.entity.User[ id=" + id + " ]";
+        return "User{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", userGroup=" + userGroup + ", status=" + status + ", extraInfo=" + extraInfo + '}';
     }
+  
     
 }
