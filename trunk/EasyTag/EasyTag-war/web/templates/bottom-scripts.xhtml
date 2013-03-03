@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition>
+        <!-- Le javascript
+    ================================================== --> 
+        <!-- General scripts --> 
+        <script src="#{request.contextPath}/js/jquery.js" type="text/javascript"></script> 
+        <script src="#{request.contextPath}/js/jquery-ui-1.8.23.custom.min.js" type="text/javascript"></script> 
+        <!--[if !IE]> -->
+        <!--[if !IE]> -->
+        <script src="#{request.contextPath}/js/plugins/enquire.min.js" type="text/javascript"></script> 
+        <!-- <![endif]-->
+        <!-- <![endif]-->
+        <!--[if lt IE 7]>
+        <script src="#{request.contextPath}/http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE7.js"></script>
+        <![endif]-->
+        <script language="javascript" type="text/javascript" src="#{request.contextPath}/js/plugins/jquery.sparkline.min.js"></script> 
+        <script src="#{request.contextPath}/js/plugins/excanvas.compiled.js"></script>
+        <script src="#{request.contextPath}/js/bootstrap-transition.js" type="text/javascript"></script> 
+        <script src="#{request.contextPath}/js/bootstrap-alert.js" type="text/javascript"></script> 
+        <script src="#{request.contextPath}/js/bootstrap-modal.js" type="text/javascript"></script> 
+        <script src="#{request.contextPath}/js/bootstrap-dropdown.js" type="text/javascript"></script> 
+        <script src="#{request.contextPath}/js/bootstrap-scrollspy.js" type="text/javascript"></script> 
+        <script src="#{request.contextPath}/js/bootstrap-tab.js" type="text/javascript"></script> 
+        <script src="#{request.contextPath}/js/bootstrap-tooltip.js" type="text/javascript"></script> 
+        <script src="#{request.contextPath}/js/bootstrap-popover.js" type="text/javascript"></script> 
+        <script src="#{request.contextPath}/js/bootstrap-button.js" type="text/javascript"></script> 
+        <script src="#{request.contextPath}/js/bootstrap-collapse.js" type="text/javascript"></script> 
+        <script src="#{request.contextPath}/js/bootstrap-carousel.js" type="text/javascript"></script> 
+        <script src="#{request.contextPath}/js/bootstrap-typeahead.js" type="text/javascript"></script> 
+        <script src="#{request.contextPath}/js/bootstrap-affix.js" type="text/javascript"></script> 
+        <script src="#{request.contextPath}/js/fileinput.jquery.js" type="text/javascript"></script> 
+        <script src="#{request.contextPath}/js/jquery.touchdown.js" type="text/javascript"></script> 
+        <script language="javascript" type="text/javascript" src="#{request.contextPath}/js/plugins/jquery.uniform.min.js"></script> 
+        <script language="javascript" type="text/javascript" src="#{request.contextPath}/js/plugins/jquery.tinyscrollbar.min.js"></script> 
+        <script language="javascript" type="text/javascript" src="#{request.contextPath}/js/jnavigate.jquery.min.js"></script> 
+        <script language="javascript" type="text/javascript" src="#{request.contextPath}/js/jquery.touchSwipe.min.js"></script> 
+        <script language="javascript" type="text/javascript" src="#{request.contextPath}/js/plugins/jquery.peity.min.js"></script> 
+
+        <!-- Flot charts --> 
+        <script language="javascript" type="text/javascript" src="#{request.contextPath}/js/plugins/flot/jquery.flot.js"></script> 
+        <script language="javascript" type="text/javascript" src="#{request.contextPath}/js/plugins/flot/jquery.flot.resize.js"></script> 
+
+        <!-- Data tables --> 
+        <script type="text/javascript" language="javascript" src="#{request.contextPath}/js/plugins/datatables/js/jquery.dataTables.js"></script> 
+
+        <!-- Task plugin --> 
+        <script language="javascript" type="text/javascript" src="#{request.contextPath}/js/plugins/knockout-2.0.0.js"></script> 
+
+        <!-- Custom made scripts for this template --> 
+        <script src="#{request.contextPath}/js/scripts.js" type="text/javascript"></script> 
+        <script type="text/javascript">
+            /**** Specific JS for this page ****/
+            /* Todo Plugin */
+            var todo_data = [
+            ];
+
+
+            function Task(data) {
+                this.title = ko.observable(data.title);
+                this.isDone = ko.observable(data.isDone);
+                this.isEditing = ko.observable(data.isEditing);
+
+                this.startEdit = function(event) {
+                    console.log("editing");
+                    this.isEditing(true);
+                }
+
+                this.updateTask = function(task) {
+                    this.isEditing(false);
+                }
+            }
+
+            function TaskListViewModel() {
+                // Data
+                var self = this;
+                self.tasks = ko.observableArray([]);
+                self.newTaskText = ko.observable();
+                self.incompleteTasks = ko.computed(function() {
+                    return ko.utils.arrayFilter(self.tasks(),
+                            function(task) {
+                                return !(task.isDone() || task._destroy);
+                            });
+                });
+
+                self.completeTasks = ko.computed(function() {
+                    return ko.utils.arrayFilter(self.tasks(),
+                            function(task) {
+                                return !(task.isDone() || task._destroy);
+                            });
+                });
+
+                // Operations
+                self.addTask = function() {
+                    self.tasks.push(new Task({title: this.newTaskText(), isEditing: false}));
+
+                    self.newTaskText("");
+
+                };
+                self.removeTask = function(task) {
+                    self.tasks.destroy(task)
+                };
+
+                self.removeCompleted = function() {
+                    self.tasks.destroyAll(self.completeTasks());
+                };
+
+                /* Load the data */
+                var mappedTasks = $.map(todo_data, function(item) {
+                    return new Task(item);
+                });
+
+                self.tasks(mappedTasks);
+            }
+
+            ko.applyBindings(new TaskListViewModel());
+            //End Todo Plugin
+
+        </script>
+    </ui:composition>
+</html>

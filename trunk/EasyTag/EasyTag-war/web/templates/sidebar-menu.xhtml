@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <ui:composition>
+        <ul id="sidebar_menu" class="navbar nav nav-list container full">
+            <li class="accordion-group active color_4"> <h:link class="dashboard" outcome="index"><img src="#{request.contextPath}/img/menu_icons/dashboard.png" /><span>Home Page</span></h:link> </li>
+            <li class="accordion-group color_7"> <a class="accordion-toggle widgets collapsed " data-toggle="collapse" data-parent="#sidebar_menu" href="#{request.contextPath}/#collapse1"> <img src="#{request.contextPath}/img/menu_icons/forms.png" /><span>Profile</span></a>
+                <ul id="collapse1" class="accordion-body collapse">
+                    <li><h:link outcome="/user/profile/index">View / Edit Profile</h:link></li>
+                    <li><h:link outcome="/user/profile/settings">Settings</h:link></li>
+                    <li><h:link outcome="/user/profile/password">OpenID and Password</h:link></li>
+                </ul>
+            </li>
+            <li class="accordion-group color_25"> <a class="accordion-toggle widgets collapsed" data-toggle="collapse" data-parent="#sidebar_menu" href="#{request.contextPath}/#collapse5"> <img src="#{request.contextPath}/img/menu_icons/others.png" /><span>Documents</span></a>
+                <ul id="collapse5" class="accordion-body collapse">
+                    <li><h:link outcome="/user/docs/index">My Documents</h:link></li>
+                    <li><h:link outcome="/user/docs/library">Library</h:link></li>
+                    <li><h:link outcome="/user/docs/search">Advanced search</h:link></li> 
+                </ul>
+            </li>
+            <li class="color_8"> <a class="widgets" data-parent="#sidebar_menu" href="#{request.contextPath}/user/upload.xhtml"> <img src="#{request.contextPath}/img/menu_icons/gallery.png" /><span>Upload Photo</span></a> </li>
+        </ul>
+    </ui:composition>
+</html>
