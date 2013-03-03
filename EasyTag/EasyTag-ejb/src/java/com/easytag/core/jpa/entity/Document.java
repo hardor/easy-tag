@@ -2,6 +2,7 @@ package com.easytag.core.jpa.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -52,7 +53,7 @@ public class Document implements Serializable {
     
     @JoinColumn(name = "tag_id")
     @ManyToMany
-    private Tag tag;
+    private Set<Tag> tags;
         
     public Long getId() {
         return id;
@@ -134,12 +135,12 @@ public class Document implements Serializable {
         this.album = album;
     }
 
-    public Tag getTag() {
-        return tag;
+    public Set<Tag> getTags() {
+        return tags;
     }
 
-    public void setTag(Tag tag) {
-        this.tag = tag;
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
     
     @Override
@@ -166,7 +167,7 @@ public class Document implements Serializable {
 
     @Override
     public String toString() {
-        return "Document{" + "id=" + id + ", name=" + name + ", information=" + information + ", rating=" + rating + ", length=" + length + ", width=" + width + ", status=" + status + ", extraInfo=" + extraInfo + ", user=" + user + ", album=" + album + ", tag=" + tag + '}';
+        return "Document{" + "id=" + id + ", name=" + name + ", information=" + information + ", rating=" + rating + ", length=" + length + ", width=" + width + ", status=" + status + ", extraInfo=" + extraInfo + ", user=" + user + ", album=" + album + ", tags=" + tags + '}';
     }
 
    

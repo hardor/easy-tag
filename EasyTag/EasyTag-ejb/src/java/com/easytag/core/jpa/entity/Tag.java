@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -30,14 +28,6 @@ public class Tag implements Serializable {
     
     @Column(name="extra_info")
     private String extraInfo;
-
-    @JoinColumn(name = "fragment_id")
-    @ManyToMany
-    private Fragment fragment;
-     
-    @JoinColumn(name = "document_id")
-    @ManyToMany
-    private Document document;
         
     public Long getId() {
         return id;
@@ -71,22 +61,6 @@ public class Tag implements Serializable {
         this.extraInfo = extraInfo;
     }
 
-    public Fragment getFragment() {
-        return fragment;
-    }
-
-    public void setFragment(Fragment fragment) {
-        this.fragment = fragment;
-    }
-
-    public Document getDocument() {
-        return document;
-    }
-
-    public void setDocument(Document document) {
-        this.document = document;
-    }
-
     @Override
     public int hashCode() {
         int hash = 5;
@@ -111,8 +85,7 @@ public class Tag implements Serializable {
 
     @Override
     public String toString() {
-        return "Tag{" + "id=" + id + ", name=" + name + ", status=" + status + ", extraInfo=" + extraInfo + ", fragment=" + fragment + ", document=" + document + '}';
+        return "Tag{" + "id=" + id + ", name=" + name + ", status=" + status + ", extraInfo=" + extraInfo + '}';
     }
- 
-   
+    
 }

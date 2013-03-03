@@ -2,6 +2,7 @@ package com.easytag.core.jpa.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -48,7 +49,7 @@ public class Fragment implements Serializable {
             
     @JoinColumn(name = "tag_id")
     @ManyToMany
-    private Tag tag;
+    private Set<Tag> tags;
     
     @JoinColumn(name = "fragment_group_id")
     @ManyToOne
@@ -128,12 +129,12 @@ public class Fragment implements Serializable {
         this.rating = rating;
     }
 
-    public Tag getTag() {
-        return tag;
+    public Set<Tag> getTags() {
+        return tags;
     }
 
-    public void setTag(Tag tag) {
-        this.tag = tag;
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 
     public FragmentGroup getFragmentGroup() {
@@ -192,7 +193,7 @@ public class Fragment implements Serializable {
 
     @Override
     public String toString() {
-        return "Fragment{" + "id=" + id + ", name=" + name + ", firstCoordinateX=" + firstCoordinateX + ", firstCoordinateY=" + firstCoordinateY + ", secondCoordinateX=" + secondCoordinateX + ", secondCoordinateY=" + secondCoordinateY + ", information=" + information + ", rating=" + rating + ", tag=" + tag + ", fragmentGroup=" + fragmentGroup + ", album=" + album + ", status=" + status + ", extraInfo=" + extraInfo + '}';
+        return "Fragment{" + "id=" + id + ", name=" + name + ", firstCoordinateX=" + firstCoordinateX + ", firstCoordinateY=" + firstCoordinateY + ", secondCoordinateX=" + secondCoordinateX + ", secondCoordinateY=" + secondCoordinateY + ", information=" + information + ", rating=" + rating + ", tags=" + tags + ", fragmentGroup=" + fragmentGroup + ", album=" + album + ", status=" + status + ", extraInfo=" + extraInfo + '}';
     }
     
     
