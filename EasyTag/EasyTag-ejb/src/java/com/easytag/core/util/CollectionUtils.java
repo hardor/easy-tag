@@ -4,13 +4,13 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**
- * Tools for working with collections
+ * Tools for working with collections.
  * @author danon
  */
 public abstract class CollectionUtils {
     
     public static <T> T allowSingleItem(Collection<T> c) {
-        if (c == null) {
+        if(c == null) {
             throw new IllegalArgumentException("Argument is null");
         }
         if (c.size() != 1) {

@@ -4,12 +4,10 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 
 /**
- * Helps to load EJBs
- * 
+ * Helps to load EJBs.
  * @author danon
  */
 public abstract class EJBTool {
-    
     public static <T> T resolve(String jndiName, Class<T> clazz) {
         Context context = null;
         T t = null;
