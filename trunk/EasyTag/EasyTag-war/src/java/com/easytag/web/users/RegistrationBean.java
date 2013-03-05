@@ -9,6 +9,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -19,10 +20,19 @@ import javax.servlet.http.HttpSession;
 @ViewScoped
 public class RegistrationBean implements Serializable {
 
-    public RegistrationBean() {
-    }
     @EJB
-    UserManagerLocal um;
+    private UserManagerLocal um;
+    
+    private String login;
+    private String password;
+    private String confirmPassword;
+    private String firstName;
+    private String lastName;
+    private String email;
+    
+    public RegistrationBean() {
+        //
+    }
 
     public List<User> getUsers() {
         return um.getAllUsers();
@@ -37,23 +47,23 @@ public class RegistrationBean implements Serializable {
         return um.getUserByLogin((String) session.getAttribute("login")).getFirstName();
     }
 
-    public void registerAction(UserBean ub) {
-      System.err.println(ub.toString());
-        if (ub.getLogin() == null || ub.getPassword() == null) {
+    public void registerAction(ActionEvent evt) {
+      System.err.println(toString());
+        if (getLogin() == null || getPassword() == null) {
             return;            
         }
 
       //  if (ub.getPassword().equals(ub.getPasswordConfirm())) {
-            User ue = um.getUserByLogin(ub.getLogin());
+            User ue = um.getUserByLogin(getLogin());
 
             if (ue != null) {
                 FacesContext fc = FacesContext.getCurrentInstance();
-                fc.addMessage("register_messages", new FacesMessage(FacesMessage.SEVERITY_WARN, "Failed ", "user " + ub.getLogin() + " is registred already. Plese change name!"));
+                fc.addMessage("register_messages", new FacesMessage(FacesMessage.SEVERITY_WARN, "Failed ", "user " + getLogin() + " is registred already. Plese change name!"));
 
             } else {
-                um.createUser(ub.getEmail(), ub.getFirstName(), null, ub.getPassword(), ub.getLogin());              
+                um.createUser(getEmail(), getFirstName(), null, getPassword(), getLogin());              
                 FacesContext fc = FacesContext.getCurrentInstance();
-                fc.addMessage("register_messages", new FacesMessage(FacesMessage.SEVERITY_INFO, "Success ", "user " + ub.getLogin() + " is register"));
+                fc.addMessage("register_messages", new FacesMessage(FacesMessage.SEVERITY_INFO, "Success ", "user " + getLogin() + " is register"));
 
             }
 //        } else {
@@ -70,5 +80,51 @@ public class RegistrationBean implements Serializable {
         um.removeUserById(id);
     }
 
-           
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }      
 }
