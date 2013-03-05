@@ -6,6 +6,7 @@ import com.easytag.core.jpa.entity.UserGroup;
 import com.easytag.core.jpa.entity.UserPassword;
 import com.easytag.core.util.CollectionUtils;
 import com.easytag.core.util.EncryptionTools;
+import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
@@ -81,7 +82,7 @@ public class AppInit {
                 User u = new User();
                 u.setId(CoreConstants.ADMIN_USER_ID);
                 u.setFirstName("EasyTag");
-                u.setLastName("Admin");
+                u.setLastName("Admin");                
                 u.setUserGroup(em.find(UserGroup.class, CoreConstants.ADMIN_GROUP_ID));
                 em.persist(u);
                 

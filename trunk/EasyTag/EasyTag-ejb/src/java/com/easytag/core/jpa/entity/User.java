@@ -9,36 +9,62 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
  * Entity-class for User
- * @author Student
+ *
+ * @author Vildanov Ruslan
  */
 @Entity
-@Table(name="users")
+@Table(name = "users")
+@NamedQueries({
+    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
+    @NamedQuery(name = "User.findByUserId", query = "SELECT u FROM User u WHERE u.id = :id"),
+    @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName"),
+    @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName"),   
+    @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
+    @NamedQuery(name = "User.findByInformation", query = "SELECT u FROM User u WHERE u.information = :information")
+})
 public class User implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
     
-    @Column(name="first_name", nullable=false)
+    @Column(name = "first_name", nullable = false)
     private String firstName;
     
-    @Column(name="last_name", nullable=false)
+    @Column(name = "last_name")
     private String lastName;
     
-    @JoinColumn(name="user_group_id")
+    @JoinColumn(name = "user_group_id")
     @ManyToOne
-    private UserGroup userGroup;    
-     
-    @Column(name="status")
+    private UserGroup userGroup;
+    
+    @Column(name = "information")
+    private String information;
+       
+    @Column(name = "status")
     private int status;
     
-    @Column(name="extra_info")
+    @Column(name = "extra_info")
     private String extraInfo;
     
+   @Column(name = "email")
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Long getId() {
         return id;
     }
@@ -61,7 +87,7 @@ public class User implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }   
+    }
 
     public UserGroup getUserGroup() {
         return userGroup;
@@ -87,6 +113,17 @@ public class User implements Serializable {
         this.extraInfo = extraInfo;
     }
 
+    
+    public String getInformation() {
+        return information;
+    }
+
+    public void setInformation(String information) {
+        this.information = information;
+    }
+
+
+  
     @Override
     public int hashCode() {
         int hash = 7;
@@ -113,6 +150,4 @@ public class User implements Serializable {
     public String toString() {
         return "User{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", userGroup=" + userGroup + ", status=" + status + ", extraInfo=" + extraInfo + '}';
     }
-  
-    
 }
