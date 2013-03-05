@@ -9,22 +9,31 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
  * Entity-class for user authentification data
- * @author Student
+ * @author Vildanov Ruslan
  */
-@Entity @Table(name="user_passwords")
+@Entity
+@Table(name="user_passwords")
+@NamedQueries({
+    @NamedQuery(name = "UserPassword.findAll", query = "SELECT up FROM UserPassword up"),
+    @NamedQuery(name = "UserPassword.findByUserId", query = "SELECT up FROM UserPassword up WHERE up.id = :id"),
+    @NamedQuery(name = "UserPassword.findByPassword", query = "SELECT up FROM UserPassword up WHERE up.password = :password"),
+    @NamedQuery(name = "UserPassword.findByUserIdAndPassword", query="SELECT up FROM UserPassword up WHERE up.id = :id AND up.password = :password"),
+    @NamedQuery(name = "UserPassword.findByEmailAndPassword", query="SELECT u FROM UserPassword up  INNER JOIN up.user u where u.email = :email AND up.password = :password"),
+    @NamedQuery(name = "UserPassword.findByLogin", query = "SELECT u FROM UserPassword u WHERE u.login = :login"),
+    @NamedQuery(name = "UserPassword.findByLoginAndPassword", query="SELECT u FROM UserPassword u WHERE u.login = :login AND u.password = :password")
+})
 public class UserPassword implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
-    
-    @Column(name="login", nullable=false, unique=true)
-    private String login;
-    
+       
     @JoinColumn(name="user_id", nullable=false)
     @ManyToOne
     private User user;
@@ -35,6 +44,9 @@ public class UserPassword implements Serializable {
     @Column(name="status")
     private int status;
     
+    @Column(name="login")
+    private String login;
+    
     @Column(name="extra_info")
     private String extraInfo;
 
@@ -44,14 +56,6 @@ public class UserPassword implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
     }
 
     public User getUser() {
@@ -86,6 +90,15 @@ public class UserPassword implements Serializable {
         this.extraInfo = extraInfo;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -110,9 +123,7 @@ public class UserPassword implements Serializable {
 
     @Override
     public String toString() {
-        return "UserPassword{" + "id=" + id + ", login=" + login + ", user=" + user + ", password=" + password + ", status=" + status + ", extraInfo=" + extraInfo + '}';
+        return "UserPassword" + "id=" + id  + ", user=" + user + ", password=" + password + ", status=" + status + ", extraInfo=" + extraInfo + '}';
     }
-
-
     
 }

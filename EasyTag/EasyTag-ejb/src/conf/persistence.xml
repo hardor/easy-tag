@@ -9,7 +9,6 @@
     <class>com.easytag.core.jpa.entity.Fragment</class>
     <class>com.easytag.core.jpa.entity.FragmentGroup</class>
     <class>com.easytag.core.jpa.entity.Tag</class>
-    <class>com.easytag.core.jpa.entity.User</class>
     <class>com.easytag.core.jpa.entity.UserGroup</class>
     <class>com.easytag.core.jpa.entity.UserPassword</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
