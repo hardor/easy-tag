@@ -2,6 +2,7 @@ package com.easytag.web.users;
 
 import com.easytag.core.ejb.UserManagerLocal;
 import com.easytag.core.jpa.entity.User;
+import com.easytag.core.util.EncryptionTools;
 import java.io.IOException;
 import java.io.Serializable;
 import javax.ejb.EJB;
@@ -33,11 +34,10 @@ public class LoginBean implements Serializable {
         User ue = um.getUserByLogin(getLogin());
 
         if (ue != null) {
-            if (getPassword().equals(um.getPasswordByLogin(getLogin()))) {
+            if (EncryptionTools.SHA256(getPassword()).equals(um.getPasswordByLogin(getLogin()))) {
                 HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
                 session.setAttribute("login", getLogin());
-                FacesContext.getCurrentInstance().getExternalContext().redirect("profit.xhtml");
-                // fc.addMessage("login_messages", new FacesMessage(FacesMessage.SEVERITY_WARN, "WRONG", "Incorrect password"));
+                FacesContext.getCurrentInstance().getExternalContext().redirect("user/index.xhtml");
                 System.err.println("Success");
             } else {
                 FacesContext fc = FacesContext.getCurrentInstance();

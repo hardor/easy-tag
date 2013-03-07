@@ -26,22 +26,25 @@
             <!-- Login page -->
             <div id="login">
                 <div class="row-fluid fluid">
-                    <div class="span5"> <img src="http://userserve-ak.last.fm/serve/_/26984591/300dv0.gif" /> </div>
+                    <div class="span5"> <img src="img/logo/logo(nofont)1.jpg" /> </div>
                     <div class="span7">
                         <div class="title">
                             <span class="name">EasyTag <span style="height: 40px; display: inline-block; padding-left: 12px;"><h:link style="height: 40px; display: inline-block;" title="Sign up for free" outcome="registration"><img style="height: 40px;" src="http://askrecovery.in/images/signup_icon.png"/></h:link></span></span>
                             <span class="subtitle">Please, log in.</span>
                         </div>
-                        <h:form class="form-search row-fluid">
+                        <div >
+                                                     
+                        </div>
+                        <h:form class="form-search row-fluid">                             
                             <div class="input-append row-fluid fluid">
                                 <h:inputText class="row-fluid search-query" placeholder="Login" value="#{loginBean.login}" />
                             </div>
                             <div class="input-append row-fluid fluid">
                                 <h:inputSecret class="row-fluid search-query" placeholder="Password" value="#{loginBean.password}"/>
                                 <h:commandLink class="btn color_4" actionListener="#{loginBean.loginAction}" value="Go" />
-                            </div>
+                            </div>                           
                         </h:form>
-                        
+                        <a href="registration.xhtml">Registration</a>
                     </div>
                 </div>
             </div>
