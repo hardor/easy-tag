@@ -2,6 +2,8 @@ package com.easytag.web.users;
 
 import com.easytag.core.ejb.UserManagerLocal;
 import com.easytag.core.jpa.entity.User;
+import com.easytag.core.util.EncryptionTools;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
@@ -47,13 +49,14 @@ public class RegistrationBean implements Serializable {
         return um.getUserByLogin((String) session.getAttribute("login")).getFirstName();
     }
 
-    public void registerAction(ActionEvent evt) {
+    public void registerAction(ActionEvent evt) throws IOException {
       System.err.println(toString());
         if (getLogin() == null || getPassword() == null) {
             return;            
         }
-
-      //  if (ub.getPassword().equals(ub.getPasswordConfirm())) {
+        firstName = "Unspecified";
+        lastName = "Unspecified";
+        if (getPassword().equals(getConfirmPassword())) {
             User ue = um.getUserByLogin(getLogin());
 
             if (ue != null) {
@@ -61,15 +64,15 @@ public class RegistrationBean implements Serializable {
                 fc.addMessage("register_messages", new FacesMessage(FacesMessage.SEVERITY_WARN, "Failed ", "user " + getLogin() + " is registred already. Plese change name!"));
 
             } else {
-                um.createUser(getEmail(), getFirstName(), null, getPassword(), getLogin());              
+                um.createUser(getEmail(), getFirstName(), null, EncryptionTools.SHA256(getPassword()), getLogin());              
                 FacesContext fc = FacesContext.getCurrentInstance();
                 fc.addMessage("register_messages", new FacesMessage(FacesMessage.SEVERITY_INFO, "Success ", "user " + getLogin() + " is register"));
-
+                FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
             }
-//        } else {
-//            FacesContext fc = FacesContext.getCurrentInstance();
-//            fc.addMessage("register_messages", new FacesMessage(FacesMessage.SEVERITY_WARN, "Failed ", "Password and Confirm password is different"));
-//        }
+        } else {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage("register_messages", new FacesMessage(FacesMessage.SEVERITY_WARN, "Failed ", "Password and Confirm password is different"));
+        }
 
     }
 
