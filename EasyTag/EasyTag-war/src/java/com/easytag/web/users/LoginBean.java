@@ -3,6 +3,7 @@ package com.easytag.web.users;
 import com.easytag.core.ejb.UserManagerLocal;
 import com.easytag.core.jpa.entity.User;
 import com.easytag.core.util.EncryptionTools;
+import com.easytag.web.utils.JSFHelper;
 import java.io.IOException;
 import java.io.Serializable;
 import javax.ejb.EJB;
@@ -26,29 +27,38 @@ public class LoginBean implements Serializable {
     
     private String login;
     private String password;
+    private boolean loggedIn;
 
-    public void loginAction(ActionEvent evt) throws IOException {
+    public void loginAction(final ActionEvent evt) throws IOException {
         if (getLogin() == null || getPassword() == null) {
             return;
         }
-        User ue = um.getUserByLogin(getLogin());
+        
+        logoutAction(evt);
+
+        final JSFHelper helper = getJSFHelper();
+        final User ue = um.getUserByLogin(getLogin());
 
         if (ue != null) {
             if (EncryptionTools.SHA256(getPassword()).equals(um.getPasswordByLogin(getLogin()))) {
-                HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-                session.setAttribute("login", getLogin());
-                FacesContext.getCurrentInstance().getExternalContext().redirect("user/index.xhtml");
-                System.err.println("Success");
+                HttpSession session = helper.getSession(true);
+                session.setAttribute("user_id", ue.getId());
+                helper.redirect("user/index.xhtml");
+                loggedIn = true;
+                // TODO: logging
             } else {
                 FacesContext fc = FacesContext.getCurrentInstance();
-                fc.addMessage("login_messages", new FacesMessage(FacesMessage.SEVERITY_WARN, "WRONG", "Incorrect password"));
-                System.err.println("Incorrect password");
+                helper.addMessage("login_messages", FacesMessage.SEVERITY_WARN, "WRONG", "Incorrect password");
+                // TODO: logging
             }
         } else {
-            FacesContext fc = FacesContext.getCurrentInstance();
-            fc.addMessage("login_messages", new FacesMessage(FacesMessage.SEVERITY_WARN, "WRONG", "Incorrect password and login."));
-            System.err.println("Incorrect password and login");
+            helper.addMessage("login_messages", FacesMessage.SEVERITY_WARN, "WRONG", "Incorrect password and login.");
+            // TODO: logging
         }
+    }
+    
+    protected JSFHelper getJSFHelper() {
+        return new JSFHelper();
     }
 
     public String getLogin() {
@@ -67,10 +77,26 @@ public class LoginBean implements Serializable {
         this.password = password;
     }
 
-    public void logoutAction(ActionEvent evt) throws IOException {
-        FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
-        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-        session.setAttribute("login", null);
+    public UserManagerLocal getUm() {
+        return um;
+    }
 
+    public void setUm(UserManagerLocal um) {
+        this.um = um;
+    }
+
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
+
+    public void logoutAction(ActionEvent evt) throws IOException {
+        loggedIn = false;
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+        session.setAttribute("user_id", null);
+        getJSFHelper().redirect("/login");
     }
 }
