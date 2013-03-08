@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
-    <Scope Scope="Project"/>
+    <Scope Scope="Project">
+        <Node id="user/profile/settings.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="user/profile/password.xhtml" x="900" y="450" zoom="true"/>
+        <Node id="login.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="templates/html-head.xhtml" x="900" y="150" zoom="true"/>
+        <Node id="templates/main-template.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="user/index.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="user/profile/index.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="registration.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="css/img/glyphicons-halflings-white.html" x="1150" y="300" zoom="true"/>
+        <Node id="index.xhtml" x="400" y="450" zoom="true"/>
+        <Node id="user/docs/search.xhtml" x="400" y="300" zoom="true"/>
+        <Node id="css/img/glyphicons-halflings.html" x="900" y="300" zoom="true"/>
+        <Node id="templates/page-footer.xhtml" x="1400" y="150" zoom="true"/>
+        <Node id="templates/page-header.xhtml" x="650" y="300" zoom="true"/>
+        <Node id="user/docs/index.xhtml" x="150" y="150" zoom="true"/>
+        <Node id="user/docs/library.xhtml" x="650" y="450" zoom="true"/>
+        <Node id="templates/bottom-scripts.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="templates/sidebar-menu.xhtml" x="400" y="600" zoom="true"/>
+    </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>

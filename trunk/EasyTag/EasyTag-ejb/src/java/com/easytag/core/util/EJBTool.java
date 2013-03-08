@@ -9,11 +9,11 @@ import javax.naming.InitialContext;
  */
 public abstract class EJBTool {
     public static <T> T resolve(String jndiName, Class<T> clazz) {
-        Context context = null;
+        Context context;
         T t = null;
         try {
             context = new InitialContext();
-            t = (T)context.lookup(jndiName);
+            t = (T) context.lookup(jndiName);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -21,7 +21,7 @@ public abstract class EJBTool {
     }
     
     public static Object resolve(String jndiName) {
-        Context context = null;
+        Context context;
         Object o = null;
         try {
             context = new InitialContext();
