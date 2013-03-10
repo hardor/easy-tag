@@ -29,7 +29,7 @@ public class LoginBean implements Serializable {
     private String password;
     private boolean loggedIn;
 
-    public void loginAction(final ActionEvent evt) throws IOException {
+    public void loginAction(final ActionEvent evt) {
         if (getLogin() == null || getPassword() == null) {
             return;
         }
@@ -37,6 +37,7 @@ public class LoginBean implements Serializable {
         logoutAction(evt);
 
         final JSFHelper helper = getJSFHelper();
+        final UserManagerLocal um = getUm();
         final User ue = um.getUserByLogin(getLogin());
 
         if (ue != null) {
@@ -77,12 +78,8 @@ public class LoginBean implements Serializable {
         this.password = password;
     }
 
-    public UserManagerLocal getUm() {
+    protected UserManagerLocal getUm() {
         return um;
-    }
-
-    public void setUm(UserManagerLocal um) {
-        this.um = um;
     }
 
     public boolean isLoggedIn() {
@@ -93,10 +90,13 @@ public class LoginBean implements Serializable {
         this.loggedIn = loggedIn;
     }
 
-    public void logoutAction(ActionEvent evt) throws IOException {
-        loggedIn = false;
-        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-        session.setAttribute("user_id", null);
-        getJSFHelper().redirect("/login");
+    public void logoutAction(ActionEvent evt) {
+        if(isLoggedIn()) {
+            JSFHelper helper = getJSFHelper();
+            loggedIn = false;
+            HttpSession session = helper.getSession(true);
+            session.setAttribute("user_id", null);
+            helper.redirect("/login");
+        }
     }
 }
