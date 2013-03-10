@@ -77,4 +77,17 @@ public class LoginBeanTest {
         verify(mockHelper).addMessage("login_messages", FacesMessage.SEVERITY_WARN, "WRONG", "Incorrect password and login.");
         assertFalse(spyBean.isLoggedIn());
     }
+    
+    @Test
+    public void testLogoutAction() {
+        HttpSession mockSession = mock(HttpSession.class);
+        
+        when(mockHelper.getSession(true)).thenReturn(mockSession);
+        
+        spyBean.logoutAction(mockEvt);
+        verify(mockSession).setAttribute("user_id", null);
+        verify(mockHelper).redirect("/login");
+        assertFalse(spyBean.isLoggedIn());
+    }
+    
 }
