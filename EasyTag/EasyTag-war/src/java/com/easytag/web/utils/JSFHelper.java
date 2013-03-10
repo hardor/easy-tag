@@ -10,13 +10,12 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Provides some handy routines for working with JSF context and session.
- *
  * @author danon
  */
 public class JSFHelper {
 
     private FacesContext context;
-    
+
     /**
      * Creates new instance with current Faces context.
      */
@@ -72,6 +71,11 @@ public class JSFHelper {
         return JSFHelper.addMessage(getFacesContext(), component, severity, summary, details);
     }
     
+    public void redirect(String nav) {
+        NavigationHandler handler = getApplication().getNavigationHandler();
+        handler.handleNavigation(getFacesContext(), null, nav);
+    }
+    
     public static FacesMessage addMessage(FacesContext fc, String component, FacesMessage.Severity severity, String summary, String details) {
         return addMessage(fc, component, new FacesMessage(severity, summary, details));
     }
@@ -81,10 +85,5 @@ public class JSFHelper {
             fc.addMessage(component, msg);
         }
         return msg;
-    }
-    
-    public void redirect(String nav) {
-        NavigationHandler handler = getApplication().getNavigationHandler();
-        handler.handleNavigation(getFacesContext(), null, nav);
     }
 }
