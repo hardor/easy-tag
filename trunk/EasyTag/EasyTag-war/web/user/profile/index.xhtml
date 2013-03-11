@@ -1,14 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<!DOCTYPE html [<!ENTITY nbsp "&#160;"> <!ENTITY times "&#215;"> <!ENTITY copy "&#211;">]>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="/templates/main-template.xhtml">
+        <ui:define name="content">
+            <div id="main_container">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="title">
+            <div class="row-fluid legend">
+                <h1> #{userInfoBean.firstName}  #{userInfoBean.lastName}  </h1>
+            </div>
+          </div>
+          <!-- End .title -->
+          <div class="content">
+            <div class="row-fluid well well-small"> <img class="row-fluid" src="#{request.contextPath}/img/thumbnail_george.jpg" /></div>
+            <ul class="nav nav-tabs dark nav-stacked">
+              <li><h:link value="Profile Edit" outcome="/user/profile/edit"><i class="gicon-lock"></i></h:link></li>
+              <li><h:link value="Settings" outcome="/user/profile/settings"><i class="gicon-lock"></i></h:link></li>
+              <li><h:link value="Log out" outcome="/user/logout"><i class="gicon-lock"></i></h:link></li>
+            </ul>
+          </div>
+          <!-- End .content --> 
+        </div>
+        <!-- End .span3 -->
+        
+        <div class="span9">          
+          <div class="content spacer-big">
+            <hr/>
+            <h3><span>About Me:</span></h3>                     
+            <p>#{userInfoBean.information}</p>
+            <hr/>
+            <h3><span>Address:</span></h3>
+            <address>
+            Todo: add address to entity
+            </address>
+            <hr/>
+            <address>
+            <strong>Full Name:</strong><br/>
+            #{userInfoBean.firstName} #{userInfoBean.lastName}
+            </address>
+            <hr/>
+            <address>
+            <strong>E-mail:</strong><br/>
+            <a href="mailto:#">#{userInfoBean.email}</a>
+            </address>
+            <hr/>
+             <address>
+            <strong>Phone Number:</strong><br/>
+            #{userInfoBean.phone}
+            </address>
+            <hr/>
+           </div>
+          <!-- End .content --> 
+        </div>
+        <!-- End .span9 --> 
+      </div>
+      <!-- End .row-fluid --> 
+      
+    </div>
+        </ui:define>
+    </ui:composition>
 </html>
