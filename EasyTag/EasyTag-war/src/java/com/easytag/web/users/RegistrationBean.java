@@ -32,6 +32,7 @@ public class RegistrationBean implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
+     private String information;
     
     public RegistrationBean() {
         //
@@ -56,6 +57,7 @@ public class RegistrationBean implements Serializable {
         }
         firstName = "Unspecified";
         lastName = "Unspecified";
+        information="Tell to the world about yourself!";
         final JSFHelper helper = getJSFHelper();
         if (getPassword().equals(getConfirmPassword())) {
             User ue = um.getUserByLogin(getLogin());
@@ -63,7 +65,7 @@ public class RegistrationBean implements Serializable {
             if (ue != null) {
                 helper.addMessage("register_messages", FacesMessage.SEVERITY_WARN, "Failed ", "user " + getLogin() + " is registred already. Plese change name!");
             } else {
-                um.createUser(getEmail(), getFirstName(), null, EncryptionTools.SHA256(getPassword()), getLogin());              
+                um.createUser(getEmail(), getFirstName(), getLastName(), EncryptionTools.SHA256(getPassword()), getLogin(),getInformation());              
                 helper.addMessage("register_messages", FacesMessage.SEVERITY_INFO, "Success ", "user " + getLogin() + " is register");
                 helper.redirect("login");
             }
@@ -127,6 +129,14 @@ public class RegistrationBean implements Serializable {
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }  
+
+    public String getInformation() {
+        return information;
+    }
+
+    public void setInformation(String information) {
+        this.information = information;
+    }
 
     protected JSFHelper getJSFHelper() {
         return new JSFHelper();

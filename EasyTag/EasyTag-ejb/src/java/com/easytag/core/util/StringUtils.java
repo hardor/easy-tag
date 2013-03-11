@@ -57,6 +57,14 @@ public class StringUtils {
         return getValidString(s).isEmpty();
     }
 
+       public static boolean isNotEmpty(String... values) {
+        for(String s : values) {
+            if(isEmpty(s))
+                return  false;
+        }
+        return true;
+    }
+       
     public static String getValidString(String s) {
         return s == null ? EMPTY_STRING : s;
     }

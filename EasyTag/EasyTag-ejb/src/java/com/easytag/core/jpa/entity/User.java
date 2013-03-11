@@ -1,6 +1,7 @@
 package com.easytag.core.jpa.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * Entity-class for User
@@ -47,6 +50,13 @@ public class User implements Serializable {
     
     @Column(name = "information")
     private String information;
+    
+    @Column(name = "phone")
+    private String phone;
+    
+    @Column(name = "date_creation",nullable=false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private java.util.Date dateCreation;
        
     @Column(name = "status")
     private int status;
@@ -122,6 +132,21 @@ public class User implements Serializable {
         this.information = information;
     }
 
+    public Date getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(java.util.Date dateCreation) {
+        this.dateCreation = dateCreation;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
   
     @Override

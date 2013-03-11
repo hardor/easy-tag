@@ -62,6 +62,16 @@ public class JSFHelper {
         }
         return request.getSession(create);
     }
+    
+    public static Long getUserId() {
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+        return (Long) session.getAttribute("user_id");
+    }
+
+    public static void setUserId(Long userId) {
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+         session.setAttribute("user_id", userId);
+    }
 
     public FacesMessage addMessage(FacesMessage.Severity severity, String summary, String details) {
         return JSFHelper.addMessage(getFacesContext(), null, severity, summary, details);

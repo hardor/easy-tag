@@ -82,7 +82,8 @@ public class AppInit {
                 User u = new User();
                 u.setId(CoreConstants.ADMIN_USER_ID);
                 u.setFirstName("EasyTag");
-                u.setLastName("Admin");                
+                u.setLastName("Admin"); 
+                u.setDateCreation(new java.sql.Date(new Date().getTime()));
                 u.setUserGroup(em.find(UserGroup.class, CoreConstants.ADMIN_GROUP_ID));
                 em.persist(u);
                 
