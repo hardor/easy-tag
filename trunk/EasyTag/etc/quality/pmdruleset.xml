@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<ruleset name="Favorites" xmlns="http://pmd.sf.net/ruleset/1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
+	xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+
+	<description>This is the ruleset that is used in the Shaw OE2 PMD analysis.</description>
+
+	<!-- Basic Rules -->
+	<!-- enabled with local exception: @SuppressWarnings("PMD.UselessOverridingMethod") -->
+	<rule ref="rulesets/basic.xml">
+		<exclude name="AvoidThreadGroup" /> <!-- This rule is buggy and reports false positives. Enable if fixed in future PMD version? -->
+	</rule>
+
+	<!-- Braces Rules -->
+	<rule ref="rulesets/braces.xml" />
+
+	<!-- Clone Implementation Rules -->
+	<!-- enabled with local exception: @SuppressWarnings("PMD.CloneThrowsCloneNotSupportedException") -->
+	<rule ref="rulesets/clone.xml" />
+
+	<!-- Basic JSF Rules -->
+	<rule ref="rulesets/basic-jsf.xml" />
+
+	<!-- Code Size Rules -->
+	<!-- enabled with local exceptions: @SuppressWarnings("PMD.CyclomaticComplexity")
+		@SuppressWarnings("PMD.ExcessivePublicCount") @SuppressWarnings("PMD.NPathComplexity") -->
+	<rule ref="rulesets/codesize.xml">
+		<exclude name="TooManyFields" />
+		<exclude name="TooManyMethods" />
+		<exclude name="ExcessivePublicCount" /> <!-- TODO: remove 4 violations in codebase and enable -->
+	</rule>
+
+	<!-- Controversial Rules -->
+	<rule ref="rulesets/controversial.xml">
+		<exclude name="OnlyOneReturn" />
+		<exclude name="AtLeastOneConstructor" />
+		<exclude name="AvoidFinalLocalVariable" />
+		<exclude name="AvoidAccessibilityAlteration" />
+		<exclude name="CallSuperInConstructor" />
+		<exclude name="UnnecessaryConstructor" />
+		<exclude name="DataflowAnomalyAnalysis" />
+		<exclude name="AvoidUsingVolatile" />
+		<exclude name="NullAssignment" /> <!-- TODO: This rule reports false positives in ternary operators. Ignore for now, but enable if bug is fixed in future PMD version. -->
+		<exclude name="AvoidLiteralsInIfCondition" /> <!-- TODO: Enable after this rule is fixed to ignore null (PMD 5.?) -->
+		<exclude name="UseConcurrentHashMap" /> <!-- TODO: Investigate this rule further and decide if we want to enforce it -->
+	</rule>
+
+	<!-- Coupling Rules -->
+	<!-- enabled with local exceptions: @SuppressWarnings("PMD.CouplingBetweenObjects") 
+		@SuppressWarnings("PMD.LooseCoupling") @SuppressWarnings("PMD.ExcessiveImports") -->
+	<rule ref="rulesets/coupling.xml">
+		<exclude name="ExcessiveImports" /> <!-- TODO: remove 4 violations in codebase and enable -->
+	</rule>
+
+	<!-- Design Rules -->
+	<!-- enabled with local exceptions: @SuppressWarnings("PMD.CompareObjectsWithEquals") -->
+	<rule ref="rulesets/design.xml">
+		<exclude name="UseSingleton" />
+		<exclude name="MissingBreakInSwitch" />
+		<exclude name="SwitchStmtsShouldHaveDefault" />
+		<exclude name="AvoidProtectedFieldInFinalClass" />
+		<exclude name="IdempotentOperations" /> <!-- TODO: remove 1 violation in codebase and enable -->
+	</rule>
+
+	<!-- Import Statement Rules -->
+	<rule ref="rulesets/imports.xml" />
+
+	<!-- J2EE Rules -->
+	<rule ref="rulesets/j2ee.xml">
+		<exclude name="MDBAndSessionBeanNamingConvention" />
+		<exclude name="RemoteSessionInterfaceNamingConvention" />
+		<exclude name="LocalInterfaceSessionNamingConvention" />
+		<exclude name="LocalHomeNamingConvention" />
+		<exclude name="RemoteInterfaceNamingConvention" />
+	</rule>
+
+	<!-- JavaBean Rules -->
+	<rule ref="rulesets/javabeans.xml">
+		<exclude name="BeanMembersShouldSerialize" />
+	</rule>
+
+	<!-- JUnit Rules -->
+	<rule ref="rulesets/junit.xml">
+		<exclude name="JUnitAssertionsShouldIncludeMessage" />
+		<exclude name="JUnitTestsShouldIncludeAssert" />
+		<exclude name="TestClassWithoutTestCases" />
+	</rule>
+
+	<!-- Naming Rules -->
+	<!-- Enabled with local exceptions: @SuppressWarnings("PMD.AbstractNaming") -->
+	<rule ref="rulesets/naming.xml">
+		<exclude name="MethodNamingConventions" />
+		<exclude name="LongVariable" />  <!-- TODO: remove 4 violations in codebase and enable -->
+		<exclude name="GenericsNaming" /> <!-- TODO: Remove violations and enable -->
+	</rule>
+
+	<!-- Optimization Rules -->
+	<rule ref="rulesets/optimizations.xml">
+		<exclude name="MethodArgumentCouldBeFinal" />
+		<exclude name="LocalVariableCouldBeFinal" />
+		<exclude name="AvoidInstantiatingObjectsInLoops" />
+	</rule>
+
+	<!-- Security Rules -->
+	<rule ref="rulesets/sunsecure.xml" />
+
+	<!-- Strict Exception Rules -->
+	<!-- Enabled with local exceptions: @SuppressWarnings("PMD.AvoidDuplicateLiterals") -->
+	<rule ref="rulesets/strictexception.xml">
+		<exclude name="AvoidCatchingGenericException" /> <!-- TODO: remove violations and enable -->
+	</rule>
+
+	<!-- String and StringBuffer Rules -->
+	<rule ref="rulesets/strings.xml">
+		<exclude name="InefficientEmptyStringCheck" />
+		<exclude name="InsufficientStringBufferDeclaration" />
+		<exclude name="AvoidDuplicateLiterals" /> <!-- TODO: remove 14 violations in codebase and enable -->
+	</rule>
+
+	<!-- Type Resolution Rules -->
+	<rule ref="rulesets/typeresolution.xml">
+		<exclude name="UnusedImports" />
+		<exclude name="LooseCoupling" /> <!-- duplicates same metric from Coupling rules block -->
+		<exclude name="SignatureDeclareThrowsException" /> <!-- duplicates same metric from Strict Exception Rules block -->
+	</rule>
+
+	<!-- Unused Code Rules -->
+	<rule ref="rulesets/unusedcode.xml" />
+
+</ruleset>

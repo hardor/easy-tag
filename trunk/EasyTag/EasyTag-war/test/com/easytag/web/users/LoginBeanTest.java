@@ -38,7 +38,6 @@ public class LoginBeanTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         
-        doNothing().when(spyBean).logoutAction(mockEvt);
         when(spyBean.getJSFHelper()).thenReturn(mockHelper);
         when(spyBean.getUm()).thenReturn(mockUserManager);
     }
@@ -55,6 +54,7 @@ public class LoginBeanTest {
         
         when(spyBean.getLogin()).thenReturn("test");
         when(spyBean.getPassword()).thenReturn("123");
+        doNothing().when(spyBean).logoutAction(mockEvt);
         
         spyBean.loginAction(mockEvt);
         verify(mockSession).setAttribute("user_id", mockUser.getId());
@@ -72,6 +72,7 @@ public class LoginBeanTest {
         
         when(spyBean.getLogin()).thenReturn("test");
         when(spyBean.getPassword()).thenReturn("123");
+        doNothing().when(spyBean).logoutAction(mockEvt);
         
         spyBean.loginAction(mockEvt);
         verify(mockHelper).addMessage("login_messages", FacesMessage.SEVERITY_WARN, "WRONG", "Incorrect password and login.");
@@ -84,6 +85,7 @@ public class LoginBeanTest {
         
         when(mockHelper.getSession(true)).thenReturn(mockSession);
         
+        spyBean.setLoggedIn(true);
         spyBean.logoutAction(mockEvt);
         verify(mockSession).setAttribute("user_id", null);
         verify(mockHelper).redirect("/login");
