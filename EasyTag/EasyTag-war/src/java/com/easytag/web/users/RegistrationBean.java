@@ -59,7 +59,7 @@ public class RegistrationBean implements Serializable {
         lastName = "Unspecified";
         information="Tell to the world about yourself!";
         final JSFHelper helper = getJSFHelper();
-        if (getPassword().equals(getConfirmPassword())) {
+        if(getPassword().equals(getConfirmPassword())) {
             User ue = um.getUserByLogin(getLogin());
 
             if (ue != null) {
