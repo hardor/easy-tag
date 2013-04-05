@@ -36,6 +36,14 @@ public class StringUtils {
         s1 += list.get(list.size() - 1);
         return s1;
     }
+    
+    public static int getValidInt(String s) {
+        if (!isValidInteger(s)) {
+            return 0;
+        } else {
+            return Integer.parseInt(s);
+        }
+    } 
 
     public static List<String> getListOfStrings(String delimeter, String s) {
         try {
@@ -57,14 +65,15 @@ public class StringUtils {
         return getValidString(s).isEmpty();
     }
 
-       public static boolean isNotEmpty(String... values) {
-        for(String s : values) {
-            if(isEmpty(s))
-                return  false;
+    public static boolean isNotEmpty(String... values) {
+        for (String s : values) {
+            if (isEmpty(s)) {
+                return false;
+            }
         }
         return true;
     }
-       
+
     public static String getValidString(String s) {
         return s == null ? EMPTY_STRING : s;
     }
@@ -160,4 +169,18 @@ public class StringUtils {
         Matcher m = p.matcher(email);
         return m.matches();
     }
+
+    public static boolean isValidInteger(String s) {
+        if (s == null) {
+            return false;
+        }
+        Pattern pattern = Pattern.compile("\\d+");
+        Matcher matcher = pattern.matcher(s);
+        if (matcher.matches()) {
+            return true;
+        }
+        return false;
+    }
+
+      
 }

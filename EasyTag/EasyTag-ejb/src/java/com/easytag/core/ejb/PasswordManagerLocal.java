@@ -1,5 +1,7 @@
 package com.easytag.core.ejb;
 
+
+import com.easytag.core.jpa.entity.UserPassword;
 import javax.ejb.Local;
 
 /**
@@ -9,11 +11,16 @@ import javax.ejb.Local;
 @Local
 public interface PasswordManagerLocal {
 
+    Long checkUserPassword(String login, String password);
+    
     Long checkUserPassword(Long userId, String password);
 
-    Long checkUserPassword(String login, String password);
+    boolean recoverPassword(Long userId);
 
-    public boolean recoverPassword(Long userId);
+    UserPassword getByPassword(String password);
 
-    public void changeUserPassword(Long userId, String newPassword);
+    UserPassword getByUserId(Long user_id);
+    
+    UserPassword changeUserPassword(Long userId, String newPassword);
+  
 }

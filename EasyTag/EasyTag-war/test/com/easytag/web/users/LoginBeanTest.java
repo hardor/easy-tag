@@ -48,7 +48,7 @@ public class LoginBeanTest {
         HttpSession mockSession = mock(HttpSession.class);
         
         when(mockUserManager.getUserByLogin("test")).thenReturn(mockUser);
-        when(mockUser.getId()).thenReturn(1L);
+        when(mockUser.getUser_id()).thenReturn(1L);
         when(mockUserManager.getPasswordByLogin("test")).thenReturn(EncryptionTools.SHA256("123"));  
         when(mockHelper.getSession(true)).thenReturn(mockSession);
         
@@ -57,7 +57,7 @@ public class LoginBeanTest {
         doNothing().when(spyBean).logoutAction(mockEvt);
         
         spyBean.loginAction(mockEvt);
-        verify(mockSession).setAttribute("user_id", mockUser.getId());
+        verify(mockSession).setAttribute("user_id", mockUser.getUser_id());
         verify(mockHelper).redirect("user/index.xhtml");
         assertTrue(spyBean.isLoggedIn());
     }

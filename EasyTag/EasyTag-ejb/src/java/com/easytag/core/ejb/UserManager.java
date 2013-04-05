@@ -6,7 +6,6 @@ import com.easytag.core.jpa.entity.UserGroup;
 import com.easytag.core.jpa.entity.UserPassword;
 import java.util.Date;
 import java.util.List;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,7 +17,6 @@ import org.apache.log4j.Logger;
  * @author Vildanov Ruslan
  */
 @Stateless
-@LocalBean
 public class UserManager implements UserManagerLocal {
 
     private final Logger log = Logger.getLogger(UserManager.class);
@@ -26,7 +24,7 @@ public class UserManager implements UserManagerLocal {
     private EntityManager em;
 
     @Override
-    public User createUser(String email, String firstName, String lastName, String password, String login,String information) {
+    public User createUser(String email, String firstName, String lastName, String password, String login, String information, String avatar) {
         User user = new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
@@ -34,6 +32,7 @@ public class UserManager implements UserManagerLocal {
         user.setDateCreation(new java.sql.Date(new Date().getTime()));
         user.setUserGroup(em.find(UserGroup.class, CoreConstants.USER_GROUP_ID));
         user.setEmail(email);
+        user.setAvatar(avatar);
         em.persist(user);
 
         UserPassword up = new UserPassword();
@@ -61,8 +60,13 @@ public class UserManager implements UserManagerLocal {
     @Override
     public User getUserById(Long userId) {
         Query q = em.createNamedQuery("User.findByUserId", User.class);
-        q.setParameter("id", userId);
-        return (User) q.getSingleResult();
+        q.setParameter("user_id", userId);
+        List results = q.getResultList();
+        if (!results.isEmpty()) {
+            return (User) results.get(0);
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -86,6 +90,7 @@ public class UserManager implements UserManagerLocal {
 
         if (!results.isEmpty()) {
             UserPassword up = (UserPassword) results.get(0);
+            //  System.out.println(up.getUser().toString());
             return up.getUser();
         } else {
             return null;
@@ -127,7 +132,7 @@ public class UserManager implements UserManagerLocal {
         }
 
         Query q2 = em.createNamedQuery("User.findByUserId", User.class);
-        q.setParameter("id", l.get(0).getId());
+        q.setParameter("user_id", l.get(0).getId());
         return (User) q2.getResultList().get(0);
     }
 
@@ -146,7 +151,7 @@ public class UserManager implements UserManagerLocal {
     }
 
     @Override
-    public User modifyUserInfo(Long userId, String name, String surname, String information,String email, String phone) {
+    public User modifyUserInfo(Long userId, String name, String surname, String information, String email, String phone) {
         if (userId == null) {
             return null;
         } else {
@@ -155,7 +160,7 @@ public class UserManager implements UserManagerLocal {
                 user.setFirstName(name);
                 user.setLastName(surname);
                 user.setInformation(information);
-                 user.setEmail(email);
+                user.setEmail(email);
                 user.setPhone(phone);
                 em.merge(user);
                 log.info("User information modyfyed: " + user);
@@ -165,9 +170,9 @@ public class UserManager implements UserManagerLocal {
     }
 
     @Override
-    public String getPasswordById(Long Id){
+    public String getPasswordById(Long Id) {
         Query q = em.createNamedQuery("UserPassword.findByUserId", UserPassword.class);
-        q.setParameter("id", Id);
+        q.setParameter("user_id", Id);
         List results = q.getResultList();
 
         if (!results.isEmpty()) {
@@ -177,5 +182,22 @@ public class UserManager implements UserManagerLocal {
             return null;
         }
     }
-    
+
+    @Override
+    public void setAvatar(Long userId, String Avatar) {
+        System.out.println("User avatar modyfyed: " + userId + Avatar);
+        if (userId == null) {
+            return;
+        } else {
+            User user = em.find(User.class, userId);
+            if (user != null) {
+                if (!"/img/avatar/default_avatar.png".equals(Avatar)) {
+                    user.setAvatar(Avatar);
+                    em.merge(user);
+                    System.out.println("User avatar modyfyed: " + user + Avatar);
+                    log.info("User avatar modyfyed: " + user);
+                }
+            }
+        }
+    }
 }

@@ -4,13 +4,11 @@ import com.easytag.core.ejb.UserManagerLocal;
 import com.easytag.core.jpa.entity.User;
 import com.easytag.core.util.EncryptionTools;
 import com.easytag.web.utils.JSFHelper;
-import java.io.IOException;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 
@@ -43,17 +41,16 @@ public class LoginBean implements Serializable {
         if (ue != null) {
             if (EncryptionTools.SHA256(getPassword()).equals(um.getPasswordByLogin(getLogin()))) {
                 HttpSession session = helper.getSession(true);
-                session.setAttribute("user_id", ue.getId());
+                session.setAttribute("user_id", ue.getUser_id());
                 helper.redirect("user/index.xhtml");
                 loggedIn = true;
                 // TODO: logging
             } else {
-                FacesContext fc = FacesContext.getCurrentInstance();
-                helper.addMessage("login_messages", FacesMessage.SEVERITY_WARN, "WRONG", "Incorrect password");
+           helper.addMessage("login_message", FacesMessage.SEVERITY_WARN, "WRONG", "Incorrect password");
                 // TODO: logging
             }
         } else {
-            helper.addMessage("login_messages", FacesMessage.SEVERITY_WARN, "WRONG", "Incorrect password and login.");
+            helper.addMessage("login_messages", FacesMessage.SEVERITY_WARN, "WRONG", "Incorrect login.");
             // TODO: logging
         }
     }

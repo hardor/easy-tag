@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 @Table(name = "users")
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
-    @NamedQuery(name = "User.findByUserId", query = "SELECT u FROM User u WHERE u.id = :id"),
+    @NamedQuery(name = "User.findByUserId", query = "SELECT u FROM User u WHERE u.user_id = :user_id"),
     @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName"),
     @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName"),   
     @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
@@ -36,7 +36,7 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    private Long id;
+    private Long user_id;
     
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -67,6 +67,9 @@ public class User implements Serializable {
    @Column(name = "email")
     private String email;
 
+    @Column(name = "avatar")
+    private String avatar;
+    
     public String getEmail() {
         return email;
     }
@@ -75,12 +78,12 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public Long getId() {
-        return id;
+    public Long getUser_id() {
+        return user_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUser_id(Long user_id) {
+        this.user_id = user_id;
     }
 
     public String getFirstName() {
@@ -148,11 +151,18 @@ public class User implements Serializable {
         this.phone = phone;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
   
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 13 * hash + Objects.hashCode(this.id);
+        hash = 13 * hash + Objects.hashCode(this.user_id);
         return hash;
     }
 
@@ -165,7 +175,7 @@ public class User implements Serializable {
             return false;
         }
         final User other = (User) obj;
-        if (!Objects.equals(this.id, other.id)) {
+        if (!Objects.equals(this.user_id, other.user_id)) {
             return false;
         }
         return true;
@@ -173,6 +183,6 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", userGroup=" + userGroup + ", status=" + status + ", extraInfo=" + extraInfo + '}';
+        return "User{" + "id=" + user_id + ", firstName=" + firstName + ", lastName=" + lastName + ", userGroup=" + userGroup + ", status=" + status + ", extraInfo=" + extraInfo + '}';
     }
 }

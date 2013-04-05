@@ -1,8 +1,10 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html class="no-js login" lang="en"
-      xmlns:h="http://java.sun.com/jsf/html">
-    <head>
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
         <meta charset="utf-8" />
         <title>EasyTag Login</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,29 +21,34 @@
         <!--[if lt IE 9]>
               <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-    </head>
+    </h:head>
 
-    <body>
+    <h:body>
         <div id="login_page"> 
             <!-- Login page -->
             <div id="login">
                 <div class="row-fluid fluid">
-                    <div class="span5"><h:graphicImage  value="/img/logo/logo(nofont)1.jpg"/></div>
+                    <div class="span5"><h:graphicImage  value="img/logo/logo(nofont)1.jpg"/></div>
                     <div class="span7">
                         <div class="title">
-                            <span class="name">EasyTag <span style="height: 40px; display: inline-block; padding-left: 12px;"><h:link style="height: 40px; display: inline-block;" title="Sign up for free" outcome="registration"><h:graphicImage style="height: 40px;" value="/img/signup_icon.png"/></h:link></span></span>
+                            <span class="name">EasyTag <span style="height: 40px; display: inline-block; padding-left: 12px;"><h:link style="height: 40px; display: inline-block;" title="Sign up for free" outcome="registration"><h:graphicImage style="height: 40px;" value="img/signup_icon.png"/></h:link></span></span>
                             <span class="subtitle">Please, log in.</span>
                         </div>
                         <div >
                                                      
                         </div>
-                        <h:form class="form-search row-fluid">                             
+                        <h:form id="login_form" class="form-search row-fluid">    
+                             <h:messages  id="messages" title="Info" showDetail="true"/>
                             <div class="input-append row-fluid fluid">
                                 <h:inputText class="row-fluid search-query"  placeholder="Login" value="#{loginBean.login}" />
                             </div>
                             <div class="input-append row-fluid fluid">
                                 <h:inputSecret class="row-fluid search-query" placeholder="Password" value="#{loginBean.password}"/>
-                                <h:commandLink class="btn color_4" actionListener="#{loginBean.loginAction}" value="Go" />
+                                
+                                <h:commandLink type="submit" class="btn color_4" actionListener="#{loginBean.loginAction}" value="Go">
+                                          <f:ajax render=":login_form" execute="@form"/>
+                                 </h:commandLink>
+                                           
                             </div>    
                         </h:form>
                           <h:link value="Registration page" outcome="registration" style="color: white"/>
@@ -166,6 +173,6 @@
 
 
         </script>
-    </body>
+    </h:body>
 
 </html>

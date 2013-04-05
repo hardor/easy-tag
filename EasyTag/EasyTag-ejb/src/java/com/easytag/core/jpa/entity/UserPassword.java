@@ -21,10 +21,9 @@ import javax.persistence.Table;
 @Table(name="user_passwords")
 @NamedQueries({
     @NamedQuery(name = "UserPassword.findAll", query = "SELECT up FROM UserPassword up"),
-    @NamedQuery(name = "UserPassword.findByUserId", query = "SELECT up FROM UserPassword up WHERE up.id = :id"),
     @NamedQuery(name = "UserPassword.findByPassword", query = "SELECT up FROM UserPassword up WHERE up.password = :password"),
-    @NamedQuery(name = "UserPassword.findByUserIdAndPassword", query="SELECT up FROM UserPassword up WHERE up.id = :id AND up.password = :password"),
-    @NamedQuery(name = "UserPassword.findByEmailAndPassword", query="SELECT u FROM UserPassword up  INNER JOIN up.user u where u.email = :email AND up.password = :password"),
+    @NamedQuery(name = "UserPassword.findByUser", query = "SELECT up FROM UserPassword up WHERE up.user = :user"),
+    @NamedQuery(name = "UserPassword.findUserByPassword", query="SELECT us FROM UserPassword up INNER JOIN up.user us WHERE up.password = :password"),
     @NamedQuery(name = "UserPassword.findByLogin", query = "SELECT u FROM UserPassword u WHERE u.login = :login"),
     @NamedQuery(name = "UserPassword.findByLoginAndPassword", query="SELECT u FROM UserPassword u WHERE u.login = :login AND u.password = :password")
 })
