@@ -14,24 +14,14 @@ import javax.servlet.http.HttpSession;
  */
 public class JSFHelper {
 
-    private FacesContext context;
-
     /**
      * Creates new instance with current Faces context.
      */
-    public JSFHelper() {
-        this(FacesContext.getCurrentInstance());
-    }
-    
-    public JSFHelper(FacesContext context) {
-        this.context = context;
-    }
-    
-    public FacesContext getFacesContext() {
-        return context;
-    }
+    public static FacesContext getFacesContext() {
+        return FacesContext.getCurrentInstance();
+    }    
 
-    public ExternalContext getExternalContext() {
+    public static ExternalContext getExternalContext() {
         final FacesContext fc = getFacesContext();
         if (fc == null) {
             return null;
@@ -39,7 +29,7 @@ public class JSFHelper {
         return fc.getExternalContext();
     }
 
-    public HttpServletRequest getRequest() {
+    public static HttpServletRequest getRequest() {
         final ExternalContext ec = getExternalContext();
         if (ec == null) {
             return null;
@@ -73,11 +63,11 @@ public class JSFHelper {
          session.setAttribute("user_id", userId);
     }
 
-    public FacesMessage addMessage(FacesMessage.Severity severity, String summary, String details) {
+    public static FacesMessage addMessage(FacesMessage.Severity severity, String summary, String details) {
         return JSFHelper.addMessage(getFacesContext(), null, severity, summary, details);
     }
     
-    public FacesMessage addMessage(String component, FacesMessage.Severity severity, String summary, String details) {
+    public static FacesMessage addMessage(String component, FacesMessage.Severity severity, String summary, String details) {
         return JSFHelper.addMessage(getFacesContext(), component, severity, summary, details);
     }
     

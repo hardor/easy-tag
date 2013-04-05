@@ -12,7 +12,7 @@
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>  
     <session-config>
         <session-timeout>
             30
@@ -21,4 +21,38 @@
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
+   
+    <!--    imageServlet-->
+    <servlet>
+        <servlet-name>imageServlet</servlet-name>
+        <servlet-class>com.easytag.web.servlets.ImageServlet</servlet-class>
+    </servlet>
+     <servlet-mapping>
+        <servlet-name>imageServlet</servlet-name>
+        <url-pattern>/image/*</url-pattern>
+    </servlet-mapping>
+    
+    <!--    fileServlet-->
+    <servlet>
+        <servlet-name>FileDownloadServlet</servlet-name>
+        <servlet-class>com.easytag.web.servlets.FileDownloadServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FileDownloadServlet</servlet-name>
+        <url-pattern>/file/*</url-pattern>
+    </servlet-mapping>
+    
+    <filter>
+        <filter-name>PrimeFaces FileUpload Filter</filter-name>
+        <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>PrimeFaces FileUpload Filter</filter-name>
+        <servlet-name>Faces Servlet</servlet-name>
+    </filter-mapping>
+
+    <error-page>
+        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+        <location>/faces/login.xhtml</location>
+    </error-page>
 </web-app>

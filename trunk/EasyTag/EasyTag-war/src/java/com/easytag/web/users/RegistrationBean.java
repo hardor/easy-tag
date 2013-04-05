@@ -32,7 +32,8 @@ public class RegistrationBean implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
-     private String information;
+    private String information;
+    private String avatar;
     
     public RegistrationBean() {
         //
@@ -58,19 +59,19 @@ public class RegistrationBean implements Serializable {
         firstName = "Unspecified";
         lastName = "Unspecified";
         information="Tell to the world about yourself!";
+        avatar = "/img/avatar/default_avatar.png";
         final JSFHelper helper = getJSFHelper();
         if(getPassword().equals(getConfirmPassword())) {
             User ue = um.getUserByLogin(getLogin());
-
             if (ue != null) {
                 helper.addMessage("register_messages", FacesMessage.SEVERITY_WARN, "Failed ", "user " + getLogin() + " is registred already. Plese change name!");
             } else {
-                um.createUser(getEmail(), getFirstName(), getLastName(), EncryptionTools.SHA256(getPassword()), getLogin(),getInformation());              
+                um.createUser(getEmail(), getFirstName(), getLastName(), EncryptionTools.SHA256(getPassword()), getLogin(),getInformation(),getAvatar());              
                 helper.addMessage("register_messages", FacesMessage.SEVERITY_INFO, "Success ", "user " + getLogin() + " is register");
                 helper.redirect("login");
             }
         } else {
-             helper.addMessage("register_messages", FacesMessage.SEVERITY_WARN, "Failed ", "Password and Confirm password is different");
+             helper.addMessage( FacesMessage.SEVERITY_WARN, "Failed ", "Password and Confirm password is different");
         }
 
     }
@@ -136,6 +137,14 @@ public class RegistrationBean implements Serializable {
 
     public void setInformation(String information) {
         this.information = information;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     protected JSFHelper getJSFHelper() {

@@ -80,7 +80,7 @@ public class AppInit {
             // Admin User
             if (em.find(User.class, CoreConstants.ADMIN_USER_ID) == null) {
                 User u = new User();
-                u.setId(CoreConstants.ADMIN_USER_ID);
+                u.setUser_id(CoreConstants.ADMIN_USER_ID);
                 u.setFirstName("EasyTag");
                 u.setLastName("Admin"); 
                 u.setDateCreation(new java.sql.Date(new Date().getTime()));
