@@ -42,7 +42,7 @@
                             <div class="form-row control-group row-fluid">
                                 <label class="control-label span3" for="normal-field">Email</label>
                                 <div class="controls span9">
-                                    <h:inputText  class="row-fluid" value="#{userInfoBean.email}"/>
+                                    <h:inputText type="email" class="row-fluid" value="#{userInfoBean.email}"/>
                                 </div>
                             </div>
 
@@ -51,23 +51,7 @@
                                 <div class="controls span9">
                                     <h:inputText  class="row-fluid" value="#{userInfoBean.phone}"/>
                                 </div>
-                            </div> 
-                            <div class="form-row control-group row-fluid">
-                                <label class="control-label span3" for="normal-field">Avatar (max 100 kb)</label>
-                                <div class="controls span9">
-                                    <h:graphicImage value="#{pageContext.request.requestURL}/#{userInfoBean.avatar}" class="height_medium"/>
-                                </div>
-                            </div>    
-                            <div class="form-row control-group row-fluid">
-                            <div class="controls span9">
-                                <br/> 
-                                <p:messages showDetail="true"/>
-                                <p:fileUpload allowTypes="*.jpe?g; *.png; *.gif;" value="#{fileUploadController.file}" mode="simple" style="opacity: 1"/>
-                                <p:commandButton value="Submit" ajax="false"  
-                             actionListener="#{fileUploadController.upload}"/>
-                                <br/> 
-                            </div>
-                                 </div>    
+                            </div>                         
                             <div class="form-actions row-fluid">
                                 <div class="span7 ">                                           
                                     <h:commandLink type="submit" class="btn btn-primary" value="Save"  actionListener="#{userInfoBean.saveParametersAction(evt)}">
@@ -76,8 +60,22 @@
                                     <h:link class="btn btn-primary" value="Cancel" outcome="/user/profile/index"/>
                                 </div>                                
                             </div>
-
-                        </h:form>                       
+                        </h:form>   
+                        <h:form id="avatar_form" enctype="multipart/form-data"> 
+                            <div class="form-row control-group row-fluid">
+                                <label class="control-label span3" for="normal-field">Avatar (max 100 kb)</label>
+                                <div class="controls span9">
+                                    <h:graphicImage value="/#{userInfoBean.avatar}" class="height_medium"/>
+                                    <br/> 
+                                    <p:messages showDetail="true"/>
+                                    <p:fileUpload allowTypes="*.jpe?g; *.png; *.gif;" value="#{fileUploadController.file}" mode="simple"/>
+                                    <p:commandButton value="Submit" ajax="false"   actionListener="#{fileUploadController.upload}">  
+                                        <f:ajax execute="@this" render="@all"/>
+                                    </p:commandButton>
+                                    <br/> 
+                                </div>
+                            </div>   
+                        </h:form> 
                     </div>
                     <a class="btn change_color_outside">
                         <i class="paint_bucket"></i>

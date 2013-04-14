@@ -60,8 +60,7 @@ public class AppInit {
                 ug.setInformation("Administrative users. Can do whatever they want.");
                 em.persist(ug);
             }
-            
-            // Simple user group
+                       // Simple user group
             if (em.find(UserGroup.class, CoreConstants.USER_GROUP_ID) == null) {
                 UserGroup ug = new UserGroup();
                 ug.setId(CoreConstants.USER_GROUP_ID);
@@ -83,7 +82,7 @@ public class AppInit {
                 u.setUser_id(CoreConstants.ADMIN_USER_ID);
                 u.setFirstName("EasyTag");
                 u.setLastName("Admin"); 
-                u.setDateCreation(new java.sql.Date(new Date().getTime()));
+                u.setDateCreation(new java.util.Date(new Date().getTime()));
                 u.setUserGroup(em.find(UserGroup.class, CoreConstants.ADMIN_GROUP_ID));
                 em.persist(u);
                 

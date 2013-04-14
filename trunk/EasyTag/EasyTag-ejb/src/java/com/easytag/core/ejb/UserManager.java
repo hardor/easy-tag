@@ -1,6 +1,7 @@
 package com.easytag.core.ejb;
 
 import com.easytag.core.CoreConstants;
+import com.easytag.core.jpa.entity.Album;
 import com.easytag.core.jpa.entity.User;
 import com.easytag.core.jpa.entity.UserGroup;
 import com.easytag.core.jpa.entity.UserPassword;
@@ -29,7 +30,7 @@ public class UserManager implements UserManagerLocal {
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setInformation(information);
-        user.setDateCreation(new java.sql.Date(new Date().getTime()));
+        user.setDateCreation(new java.util.Date(new Date().getTime()));
         user.setUserGroup(em.find(UserGroup.class, CoreConstants.USER_GROUP_ID));
         user.setEmail(email);
         user.setAvatar(avatar);
@@ -40,7 +41,13 @@ public class UserManager implements UserManagerLocal {
         up.setLogin(login);
         up.setPassword(password);
         em.persist(up);
-
+        
+        Album a = new Album();
+        a.setName("Avatars");
+        a.setDateCreation(new java.util.Date(new Date().getTime()));
+        a.setUser(user);
+        a.setAdditionalInfo("Album for User's avatar");
+        em.persist(a);
         log.info("createUser: User created: " + user);
 
         return user;
@@ -63,9 +70,12 @@ public class UserManager implements UserManagerLocal {
         q.setParameter("user_id", userId);
         List results = q.getResultList();
         if (!results.isEmpty()) {
+            
             return (User) results.get(0);
         } else {
+           
             return null;
+            
         }
     }
 
@@ -89,8 +99,7 @@ public class UserManager implements UserManagerLocal {
         List results = q.getResultList();
 
         if (!results.isEmpty()) {
-            UserPassword up = (UserPassword) results.get(0);
-            //  System.out.println(up.getUser().toString());
+            UserPassword up = (UserPassword) results.get(0);           
             return up.getUser();
         } else {
             return null;
@@ -185,7 +194,7 @@ public class UserManager implements UserManagerLocal {
 
     @Override
     public void setAvatar(Long userId, String Avatar) {
-        System.out.println("User avatar modyfyed: " + userId + Avatar);
+       
         if (userId == null) {
             return;
         } else {
@@ -194,7 +203,7 @@ public class UserManager implements UserManagerLocal {
                 if (!"/img/avatar/default_avatar.png".equals(Avatar)) {
                     user.setAvatar(Avatar);
                     em.merge(user);
-                    System.out.println("User avatar modyfyed: " + user + Avatar);
+                
                     log.info("User avatar modyfyed: " + user);
                 }
             }

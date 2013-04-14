@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,12 +22,17 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "albums")
+@NamedQueries({
+    @NamedQuery(name = "Album.findAll", query = "SELECT a FROM Album a"),
+    @NamedQuery(name = "Album.findByAlbumId", query = "SELECT a FROM Album a WHERE a.album_id = :album_id"),
+    @NamedQuery(name = "Album.findByAlbumName", query = "SELECT a FROM Album a WHERE a.name = :albumName")    
+})
 public class Album implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    private Long id;
+    private Long album_id;
     @Column(name = "name", nullable = false)
     private String name;
     
@@ -36,14 +43,14 @@ public class Album implements Serializable {
     @ManyToOne    
     private Album parentAlbum;
     
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     @ManyToOne
     private User user;
     
-    @Column(name = "number_of_pictures", nullable = false)
+    @Column(name = "number_of_pictures")
     private int number;
     
-    @Column(name = "creation_date", nullable = false)
+    @Column(name = "creation_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreation;
     
@@ -54,11 +61,11 @@ public class Album implements Serializable {
     private String extraInfo;
 
     public Long getId() {
-        return id;
+        return album_id;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.album_id = id;
     }
 
     public String getName() {
@@ -128,7 +135,7 @@ public class Album implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 47 * hash + Objects.hashCode(this.id);
+        hash = 47 * hash + Objects.hashCode(this.album_id);
         return hash;
     }
 
@@ -141,7 +148,7 @@ public class Album implements Serializable {
             return false;
         }
         final Album other = (Album) obj;
-        if (!Objects.equals(this.id, other.id)) {
+        if (!Objects.equals(this.album_id, other.album_id)) {
             return false;
         }
         return true;
@@ -149,7 +156,7 @@ public class Album implements Serializable {
 
     @Override
     public String toString() {
-        return "Album{" + "id=" + id + ", name=" + name + ", additionalInfo=" + additionalInfo + ", parentAlbum=" + parentAlbum + ", user=" + user + ", number=" + number + ", dateCreation=" + dateCreation + ", status=" + status + ", extraInfo=" + extraInfo + '}';
+        return "Album{" + "album_id=" + album_id + ", name=" + name + ", additionalInfo=" + additionalInfo + ", parentAlbum=" + parentAlbum + ", user=" + user + ", number=" + number + ", dateCreation=" + dateCreation + ", status=" + status + ", extraInfo=" + extraInfo + '}';
     }
 
    
