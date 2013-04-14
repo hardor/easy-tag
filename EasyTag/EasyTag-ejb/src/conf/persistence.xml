@@ -5,7 +5,6 @@
     <jta-data-source>jdbc/PostgreSQL</jta-data-source>
     <class>com.easytag.core.jpa.entity.Album</class>
     <class>com.easytag.core.jpa.entity.Document</class>
-    <class>com.easytag.core.jpa.entity.File</class>
     <class>com.easytag.core.jpa.entity.Fragment</class>
     <class>com.easytag.core.jpa.entity.FragmentGroup</class>
     <class>com.easytag.core.jpa.entity.Tag</class>

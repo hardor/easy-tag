@@ -1,6 +1,7 @@
 package com.easytag.core.jpa.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
@@ -11,50 +12,65 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
- * Entity-class for document
+ * Entity-class for file
+ *
  * @author Vildanov Ruslan
  */
-@Entity @Table(name = "documents")
+@Entity
+@Table(name = "document")
+@NamedQueries({
+    @NamedQuery(name = "Document.findAll", query = "SELECT d FROM Document d"),
+    @NamedQuery(name = "Document.findByAlbum", query = "SELECT d FROM Document d where d.album.album_id=:album_id"),
+    @NamedQuery(name = "Document.findByUrl", query = "SELECT d FROM Document d where d.url=:url"),
+    @NamedQuery(name = "Document.findByExtraInfo", query = "SELECT d FROM Document d where d.extraInfo=:extraInfo")
+})
 public class Document implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    private Long id;    
-    
-    @Column(name = "name", nullable = false)
+    private Long id;
+    @Column(name = "url", nullable = false)
+    private String url;
+    @Column(name = "name")
     private String name;
-    
+    //size of document
+    @Column(name = "size_kb")
+    private Long size;
+    @Column(name = "content_type")
+    private String contentType;
     @Column(name = "information")
     private String information;
-    
     @Column(name = "rating")
-    private int rating;  
-    
-    @Column(name = "length_",nullable=false)
+    private int rating;
+    @Column(name = "creation_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateCreation;
+    @Column(name = "length_")
     private Long length;
-    
-    @Column(name = "width",nullable=false)
+    @Column(name = "width")
     private Long width;
-    
-    @Column(name="status")
+    @Column(name = "status")
     private int status;
-    
-    @Column(name="extra_info")
+    @Column(name = "extra_info")
     private String extraInfo;
-
-    @JoinColumn(name="user_id", nullable=false) @ManyToOne
-    private User user;
-    
-    @JoinColumn(name="album_id", nullable=false) @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @ManyToOne
+    private User createdBy;
+    @JoinColumn(name = "album_id")
+    @ManyToOne
     private Album album;
-    
     @JoinColumn(name = "tag_id")
     @ManyToMany
     private Set<Tag> tags;
-        
+
     public Long getId() {
         return id;
     }
@@ -63,12 +79,28 @@ public class Document implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUrl() {
+        return url;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Long getSize() {
+        return size;
+    }
+
+    public void setSize(Long size) {
+        this.size = size;
+    }
+
+    public Date getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(Date dateCreation) {
+        this.dateCreation = dateCreation;
     }
 
     public String getInformation() {
@@ -103,6 +135,22 @@ public class Document implements Serializable {
         this.width = width;
     }
 
+    public Album getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }    
+
     public int getStatus() {
         return status;
     }
@@ -118,35 +166,40 @@ public class Document implements Serializable {
     public void setExtraInfo(String extraInfo) {
         this.extraInfo = extraInfo;
     }
-    
-    public User getUser() {
-        return user;
+
+    public String getName() {
+        return name;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Album getAlbum() {
-        return album;
+    public String getContentType() {
+        return contentType;
     }
 
-    public void setAlbum(Album album) {
-        this.album = album;
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 
-    public Set<Tag> getTags() {
-        return tags;
+    public User getCreatedBy() {
+        return createdBy;
     }
 
-    public void setTags(Set<Tag> tags) {
-        this.tags = tags;
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Files{" + "id=" + id + ", url=" + url + ", name=" + name + ", size=" + size + ", information=" + information + ", rating=" + rating + ", dateCreation=" + dateCreation + ", status=" + status + ", extraInfo=" + extraInfo + ", createdBy=" + createdBy + ", album=" + album + '}';
+    } 
+
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 61 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -164,11 +217,4 @@ public class Document implements Serializable {
         }
         return true;
     }
-
-    @Override
-    public String toString() {
-        return "Document{" + "id=" + id + ", name=" + name + ", information=" + information + ", rating=" + rating + ", length=" + length + ", width=" + width + ", status=" + status + ", extraInfo=" + extraInfo + ", user=" + user + ", album=" + album + ", tags=" + tags + '}';
-    }
-
-   
 }

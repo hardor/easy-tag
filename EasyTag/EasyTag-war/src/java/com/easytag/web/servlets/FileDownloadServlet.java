@@ -1,8 +1,8 @@
 package com.easytag.web.servlets;
 
 import com.easytag.core.CoreConstants;
-import com.easytag.core.ejb.FileManagerLocal;
-import com.easytag.core.jpa.entity.Files;
+import com.easytag.core.ejb.DocumentManagerLocal;
+import com.easytag.core.jpa.entity.Document;
 import com.easytag.web.utils.JSFHelper;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 public class FileDownloadServlet extends HttpServlet {
 
     @EJB
-    private FileManagerLocal fm;
+    private DocumentManagerLocal fm;
     
     // Constants ----------------------------------------------------------------------------------
     private static final int DEFAULT_BUFFER_SIZE = 10240; // 10KB.
@@ -47,7 +47,7 @@ public class FileDownloadServlet extends HttpServlet {
 
         // Lookup File by FileId in database.
         // Do your "SELECT * FROM File WHERE FileID" thing.
-        Files file_db = fm.getFileById((Long)JSFHelper.getUserId(),Long.valueOf(fileId));
+        Document file_db = fm.getFileById((Long)JSFHelper.getUserId(),Long.valueOf(fileId));
 
         // Check if file is actually retrieved from database.
         if (file_db == null) {

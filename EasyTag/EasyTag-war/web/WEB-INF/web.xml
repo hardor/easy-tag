@@ -21,17 +21,7 @@
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
-   
-    <!--    imageServlet-->
-    <servlet>
-        <servlet-name>imageServlet</servlet-name>
-        <servlet-class>com.easytag.web.servlets.ImageServlet</servlet-class>
-    </servlet>
-     <servlet-mapping>
-        <servlet-name>imageServlet</servlet-name>
-        <url-pattern>/image/*</url-pattern>
-    </servlet-mapping>
-    
+     
     <!--    fileServlet-->
     <servlet>
         <servlet-name>FileDownloadServlet</servlet-name>

@@ -1,19 +1,11 @@
 package com.easytag.web.users;
 
-import com.easytag.core.CoreConstants;
-import com.easytag.core.ejb.FileManagerLocal;
+import com.easytag.core.ejb.DocumentManagerLocal;
 import com.easytag.core.ejb.PasswordManagerLocal;
 import com.easytag.core.ejb.UserManagerLocal;
-import com.easytag.core.jpa.entity.Files;
 import com.easytag.core.jpa.entity.User;
 import com.easytag.web.utils.JSFHelper;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.Serializable;
-import javax.activation.MimetypesFileTypeMap;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -21,7 +13,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import org.apache.log4j.Logger;
-import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -37,16 +28,16 @@ public class UserInfoBean implements Serializable {
     @EJB
     private PasswordManagerLocal pm;
     @EJB
-    FileManagerLocal fm;
-    public Long userId;
-    public String login;
-    public String firstName;
-    public String lastName;
-    public String email;
-    public String information;
-    public String phone;
+    DocumentManagerLocal fm;
+    private Long userId;
+    private String login;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String information;
+    private String phone;
     private User user;
-    public String password;
+    private String password;
     private String avatar;
 
     /**
@@ -78,14 +69,14 @@ public class UserInfoBean implements Serializable {
 
     public void saveParametersAction(ActionEvent evt) {
 
-        final JSFHelper helper = getJSFHelper();       
+        final JSFHelper helper = getJSFHelper();
         log.info("Save parametr Action");
         log.info(firstName);
         log.info(lastName);
         log.info(email);
         log.info(phone);
         log.info(information);
-        log.info(userId);
+        log.info(userId); 
         user = userManager.modifyUserInfo(userId, firstName, lastName, information, email, phone);
         JSFHelper.addMessage(FacesMessage.SEVERITY_INFO, "Succes:", "Info eddite");
         helper.redirect("/user/profile/index");
@@ -105,7 +96,7 @@ public class UserInfoBean implements Serializable {
         return email;
     }
 
-    public void setEmail(String email) {       
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -132,7 +123,7 @@ public class UserInfoBean implements Serializable {
         return password;
     }
 
-    public void setPassword(String password) {    
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -141,7 +132,7 @@ public class UserInfoBean implements Serializable {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {         
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
@@ -163,17 +154,20 @@ public class UserInfoBean implements Serializable {
         this.phone = phone;
     }
 
-    public String getAvatar() {        
-        avatar = user.getAvatar();
-      System.out.println("avatar=" +avatar);
+    public String getAvatar() {
+        avatar = user.getAvatar();       
         if (!"/img/avatar/default_avatar.png".equals(avatar)) {
-        return "faces/file?id=" + fm.getFileByUrl(getUserId(), avatar).getId();            
+            return "faces/file?id=" + fm.getFileByUrl(getUserId(), avatar).getId();
         }
         return avatar;
+    }
+
+    public void setAvatar(String avatar) {       
+        this.avatar = avatar;
+        userManager.setAvatar(getUserId(), avatar);
     }
 
     protected JSFHelper getJSFHelper() {
         return new JSFHelper();
     }
-    
 }

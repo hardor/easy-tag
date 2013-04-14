@@ -11,13 +11,13 @@
                     <li class="dropdown"> <a class="dropdown-toggle administrator" id="dLabel" role="button" data-toggle="dropdown" data-target="#">
                             <div class="title"><span class="name">#{userInfoBean.login}</span><span class="subtitle">#{userInfoBean.firstName}</span></div>
 
-                            <span class="icon"><h:graphicImage value="#{pageContext.request.requestURL}/#{userInfoBean.avatar}" class="height_medium"/></span>  </a>   
+                            <span class="icon"><h:graphicImage value="/#{userInfoBean.avatar}" class="height_medium"/></span>  </a>   
 
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                             <li><h:link value="My Profile" outcome="/user/profile/index"><i class="icon-user"></i></h:link></li>
                             <li><h:link value="Settings" outcome="/user/profile/settings"><i class="icon-user"></i></h:link></li>
                             <li><h:link value="Log out" outcome="/user/logout"><i class="icon-user"></i></h:link></li>
-                            <li><a href="#{request.contextPath}/search.html"><i class=" icon-flag"></i>Help</a></li>
+                            <li><a href="#{request.contextPath}search.html"><i class=" icon-flag"></i>Help</a></li>
                         </ul>
 
                     </li>

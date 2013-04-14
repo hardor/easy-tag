@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html [<!ENTITY nbsp "&#160;"> <!ENTITY times "&#215;"> <!ENTITY copy "&#211;">]>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/templates/main-template.xhtml">
+        <ui:define name="content">
+            <div class="span7">
+                <div class="box paint color_7">
+                    <div class="title">
+                        <h4>
+                            <i class="icon-book"></i>
+                            <span>Create Document</span>
+                        </h4>
+                    </div>
+                    <div class="content">
+                        <h:form id="document_form" enctype="multipart/form-data">    
+                            <div class="form-row control-group row-fluid">
+                                 <div class="controls span9">
+                                    <p:messages showDetail="true"/>
+                                    <p:fileUpload allowTypes="*.jpe?g; *.png; *.gif;" value="#{fileUploadController.file}" mode="simple"/>
+                                    <p:commandButton value="Submit" ajax="false"   actionListener="#{fileUploadController.upload}">  
+                                       <f:param name="alb_id" value="#{param['alb_id']}"/>
+                                    </p:commandButton>                            
+                                </div>                                
+                            </div>
+                        </h:form>
+                    </div>
+                    <a class="btn change_color_outside">
+                        <i class="paint_bucket"></i>
+                    </a>
+                </div>
+            </div>
+        </ui:define>     
+    </ui:composition>
+
+</html>

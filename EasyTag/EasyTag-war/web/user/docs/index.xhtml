@@ -1,14 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<!DOCTYPE html [<!ENTITY nbsp "&#160;"> <!ENTITY times "&#215;"> <!ENTITY copy "&#211;">]>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/templates/main-template.xhtml">
+        <ui:define name="content">            
+            <h:link outcome="createAlbum" value="Create new Album"></h:link>
+            <h:form>
+            <table>
+                <tr>
+                    <td>ID</td>
+                    <td>Name</td>
+                    <td>AdditionalInfo</td>                        
+                    <td>FirstName</td> 
+                    <td>dateCreation</td>
+                    <td>NumberPicture</td>
+                  
+                </tr>
+            
+            <ui:repeat value="#{albumBean.albums}" var="album">
+                    <tr>
+                        <td>#{album.id}</td>
+                        <td>
+                            <h:link value="#{album.name}" outcome="library">
+                                <f:param name="alb_id" value="#{album.id}"/>
+                            </h:link>
+                        </td>
+                        <td>#{album.additionalInfo}</td>
+                        <td>#{album.user.firstName}</td> 
+                        <td>#{album.dateCreation}</td> 
+                        <td>#{album.number}</td>                         
+                 
+                    </tr>                
+                </ui:repeat>
+            </table>
+                </h:form>
+        </ui:define>
+    </ui:composition>
 </html>
+
