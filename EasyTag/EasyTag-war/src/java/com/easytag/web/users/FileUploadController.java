@@ -67,7 +67,7 @@ public class FileUploadController implements Serializable {
         if (file != null) {
             try {
                 copyFile(getFile().getFileName(), getFile().getInputstream());
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -75,8 +75,9 @@ public class FileUploadController implements Serializable {
 
     public void copyFile(String fileName, InputStream in) {
         try {
-          
-            File tempFile = File.createTempFile("easytag_", "_upload", new File(destination));
+            File uploadDirectory = new File(destination);
+            uploadDirectory.mkdirs();
+            File tempFile = File.createTempFile("easytag_", "_upload", uploadDirectory);
             OutputStream out = new FileOutputStream(tempFile);
             int read = 0;
             byte[] bytes = new byte[1024];
@@ -104,6 +105,7 @@ public class FileUploadController implements Serializable {
             JSFHelper.addMessage(FacesMessage.SEVERITY_INFO, "Success ", "document " + name + " is create!");
         } catch (IOException e) {
             System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 }
