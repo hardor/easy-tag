@@ -20,7 +20,7 @@
                             <div class="form-row control-group row-fluid">
                                  <div class="controls span9">
                                     <p:messages showDetail="true"/>
-                                    <p:fileUpload allowTypes="*.jpe?g; *.png; *.gif;" value="#{fileUploadController.file}" mode="simple"/>
+                                    <p:fileUpload allowTypes="/(\.|\/)(jpe?g|png|gif)$/" value="#{fileUploadController.file}" mode="simple" invalidFileMessage="Invalid file type" invalidSizeMessage="Invalid file size (max 100 kb)" sizeLimit="100000"/>
                                     <p:commandButton value="Submit" ajax="false"   actionListener="#{fileUploadController.upload}">  
                                        <f:param name="alb_id" value="#{param['alb_id']}"/>
                                     </p:commandButton>                            

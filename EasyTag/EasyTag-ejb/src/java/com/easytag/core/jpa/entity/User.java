@@ -64,7 +64,7 @@ public class User implements Serializable {
     @Column(name = "extra_info")
     private String extraInfo;
     
-   @Column(name = "email")
+    @Column(name = "email")
     private String email;
 
     @Column(name = "avatar")

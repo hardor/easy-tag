@@ -28,6 +28,7 @@ import javax.persistence.TemporalType;
 @NamedQueries({
     @NamedQuery(name = "Document.findAll", query = "SELECT d FROM Document d"),
     @NamedQuery(name = "Document.findByAlbum", query = "SELECT d FROM Document d where d.album.album_id=:album_id"),
+    @NamedQuery(name = "Document.findByAlbumAndUser", query = "SELECT d FROM Document d where d.album.album_id=:album_id and d.createdBy.user_id=:user_id"),
     @NamedQuery(name = "Document.findByUrl", query = "SELECT d FROM Document d where d.url=:url"),
     @NamedQuery(name = "Document.findByExtraInfo", query = "SELECT d FROM Document d where d.extraInfo=:extraInfo")
 })

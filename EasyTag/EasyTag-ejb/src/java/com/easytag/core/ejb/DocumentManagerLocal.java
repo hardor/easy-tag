@@ -26,4 +26,6 @@ public interface DocumentManagerLocal {
     
     List<Document> getAllAlbumDocuments(Long album_id);    
     
+    List<Document> getAllAlbumUsersDocuments(Long user_id, Long album_id);   
+    
 }

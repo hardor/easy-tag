@@ -11,7 +11,7 @@
                     <li class="dropdown"> <a class="dropdown-toggle administrator" id="dLabel" role="button" data-toggle="dropdown" data-target="#">
                             <div class="title"><span class="name">#{userInfoBean.login}</span><span class="subtitle">#{userInfoBean.firstName}</span></div>
 
-                            <span class="icon"><h:graphicImage value="/#{userInfoBean.avatar}" class="height_medium"/></span>  </a>   
+                            <span class="icon"><h:graphicImage value="#{userInfoBean.avatar}" class="height_medium"/></span>  </a>   
 
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                             <li><h:link value="My Profile" outcome="/user/profile/index"><i class="icon-user"></i></h:link></li>

@@ -74,6 +74,5 @@ public class SessionHelper {
     public static void setUserId(HttpSession session, Long userId) {
         setSessionAttribute(session, USER_ID_SESSION_ATTR, userId);
     }
-
-   
+  
 }

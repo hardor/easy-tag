@@ -12,20 +12,19 @@
             </h:link>
             <h:form>
                 <table>
-                    <tr>
-                        <td>ID</td>
+                    <tr>                       
                         <td>Name</td>
                         <td>Iinformation</td>                        
-                        <td>FirstName</td> 
+                        <td>Created By</td> 
                         <td>dateCreation</td>
 
                     </tr>
 
-                    <ui:repeat value="#{documentBean.documentsByAlbum}" var="document">
-                        <tr>
-                            <td>#{document.id}</td>
+                    <ui:repeat value="#{documentBean.documentsByAlbumAndUser}" var="document">
+                        <tr>                           
                             <td>                        
-                                <h:link value="#{document.name}" outcome="document">                                    
+                                <h:link value="#{document.name}" outcome="document">   
+                                    <f:param name="alb_id" value="#{param['alb_id']}"/>
                                     <f:param name="doc_id" value="#{document.id}"/>                                    
                                 </h:link>                         
                             </td>

@@ -10,8 +10,7 @@
             <h:link outcome="createAlbum" value="Create new Album"></h:link>
             <h:form>
             <table>
-                <tr>
-                    <td>ID</td>
+                <tr>                    
                     <td>Name</td>
                     <td>AdditionalInfo</td>                        
                     <td>FirstName</td> 
@@ -21,8 +20,7 @@
                 </tr>
             
             <ui:repeat value="#{albumBean.albums}" var="album">
-                    <tr>
-                        <td>#{album.id}</td>
+                    <tr>                        
                         <td>
                             <h:link value="#{album.name}" outcome="library">
                                 <f:param name="alb_id" value="#{album.id}"/>

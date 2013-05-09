@@ -126,5 +126,18 @@ public class DocumentManager implements DocumentManagerLocal {
             return null;
         }
     }
-
+    
+  @Override
+    public List<Document> getAllAlbumUsersDocuments(Long user_id, Long album_id) {
+        System.out.println("alb_id22=" + album_id);
+        Query q = em.createNamedQuery("Document.findByAlbumAndUser");
+        q.setParameter("album_id", album_id);
+        q.setParameter("user_id", user_id);
+        List<Document> documents = q.getResultList();
+        if (!documents.isEmpty()) {
+            return documents;
+        } else {
+            return null;
+        }
+    }
 }
