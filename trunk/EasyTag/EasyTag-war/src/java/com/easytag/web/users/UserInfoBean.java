@@ -155,12 +155,16 @@ public class UserInfoBean implements Serializable {
     }
 
     public String getAvatar() {
-        avatar = user.getAvatar();       
-        if (avatar == null) {
+        avatar = user.getAvatar();  
+        System.err.println("1="+avatar);
+        /*if (avatar == null) {
             avatar = "/img/avatar/default_avatar.png";
+            System.err.println("2="+avatar);
         } else {
             avatar = "faces/file?id=" + fm.getFileByUrl(getUserId(), avatar).getId();
-        }
+            System.err.println("3="+avatar);
+        }*/
+        System.err.println("4="+avatar);
         return avatar; 
     }
 

@@ -3,6 +3,7 @@ package com.easytag.web.users;
 import com.easytag.core.ejb.UserManagerLocal;
 import com.easytag.core.jpa.entity.User;
 import com.easytag.core.util.EncryptionTools;
+import com.easytag.core.util.StringUtils;
 import com.easytag.web.utils.JSFHelper;
 import java.io.IOException;
 import java.io.Serializable;
@@ -56,6 +57,8 @@ public class RegistrationBean implements Serializable {
         if (getLogin() == null || getPassword() == null) {
             return;            
         }
+        //add StringUtils.isValidEmail(email)
+        
         firstName = "Unspecified";
         lastName = "Unspecified";
         information="Tell to the world about yourself!";

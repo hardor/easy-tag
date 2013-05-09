@@ -12,7 +12,19 @@
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
-    </servlet-mapping>  
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VkontakteOpenIdServlet</servlet-name>
+        <url-pattern>/vk</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VkontakteOpenIdServletToken</servlet-name>
+        <url-pattern>/vk2</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginzaServlet</servlet-name>
+        <url-pattern>/loginza</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -21,7 +33,6 @@
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
-     
     <!--    fileServlet-->
     <servlet>
         <servlet-name>FileDownloadServlet</servlet-name>
@@ -31,7 +42,6 @@
         <servlet-name>FileDownloadServlet</servlet-name>
         <url-pattern>/file/*</url-pattern>
     </servlet-mapping>
-    
     <filter>
         <filter-name>PrimeFaces FileUpload Filter</filter-name>
         <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
@@ -40,7 +50,18 @@
         <filter-name>PrimeFaces FileUpload Filter</filter-name>
         <servlet-name>Faces Servlet</servlet-name>
     </filter-mapping>
-
+    <servlet>
+        <servlet-name>VkontakteOpenIdServlet</servlet-name>
+        <servlet-class>com.easytag.web.vk.VkontakteOpenIdServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VkontakteOpenIdServletToken</servlet-name>
+        <servlet-class>com.easytag.web.vk.VkontakteOpenIdServletToken</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoginzaServlet</servlet-name>
+        <servlet-class>com.easytag.web.loginza.LoginzaServlet</servlet-class>
+    </servlet>
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
         <location>/faces/login.xhtml</location>
