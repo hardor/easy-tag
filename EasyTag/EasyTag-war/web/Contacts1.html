@@ -39,8 +39,8 @@
 					<ul id="menu">
 						<li id="nav1"><a href="index.html">Home<span>Welcome!</span></a></li>
 						<li id="nav4"><a href="Products.html">About Us<span>The best</span></a></li>
-						<li id="nav3"><a href="Contacts1.html">Sign Up<span>Start Using</span></a></li>
-						<li id="nav2" class="active"><a href="Contacts.html">Log In<span>Get Into</span></a></li>
+						<li id="nav3" class="active"><a href="Contacts1.html">Sign Up<span>Start Using</span></a></li>
+						<li id="nav2"><a href="Contacts.html">Log In<span>Get Into</span></a></li>
 					</ul>
 				</nav>
 				</div>
@@ -56,21 +56,33 @@
 			<article id="content">
 				<div class="wrapper">
 					<section class="col1">
-						<h2 class="under">Log in form</h2>
+						<h2 class="under">Registration form</h2>
 						<form id="ContactForm" method="post">
 						<div>
 							<div  class="wrapper">
-								<span>Your Name:</span>
+								<span>E-mail:</span>
 								<input type="text" class="input" >
 							</div>
 							<div  class="wrapper">
-								<span>Your Password:</span>
+								<span>Login:</span>
 								<input type="text" class="input" >
+							</div>
+							<div  class="wrapper">
+								<span>Password:</span>
+								<input type="text" class="input" >
+							</div>
+							<div  class="textarea_box">
+								<span>Confirm password:</span>
+								<input name="text" class="input">
 							</div>
 							<a href="#" onClick="document.getElementById('ContactForm').submit()">Send</a>
 							<a href="#" onClick="document.getElementById('ContactForm').reset()">Clear</a>
 						</div>
 					</form>
+					</section>
+					<section class="col2 pad_left1">
+						<h2 class="under">Welcome€! :)</h2>
+						<p>It's quick and easy. We are glad you're joining us!</p>
 					</section>
 				</div>
 
@@ -115,6 +127,8 @@
 <!-- content end -->
 		</div>
 	</div>
+		<div class="main">
+		</div>
 <script type="text/javascript"> Cufon.now(); </script>
 <script>
 	$(document).ready(function() {
