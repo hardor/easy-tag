@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html [<!ENTITY nbsp "&#160;"> <!ENTITY times "&#215;"> <!ENTITY copy "&#211;">]>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/templates/index/main-template.xhtml">        
+        <ui:define name="content">
+            <article id="content">
+				<div class="wrapper">
+					<section class="col1">
+						<h2 class="under">Contact form</h2>
+						<form id="ContactForm" method="post">
+						<div>
+							<div  class="wrapper">
+								<span>Your name:</span>
+								<input type="text" class="input" />
+							</div>
+							<div  class="wrapper">
+								<span>Your e-mail:</span>
+								<input type="text" class="input" />
+							</div>
+							<div  class="textarea_box">
+								<span>Your Message:</span>
+								<textarea name="textarea" cols="1" rows="1"></textarea>
+							</div>
+							<a href="#" onClick="document.getElementById('ContactForm').submit()">Send</a>
+							<a href="#" onClick="document.getElementById('ContactForm').reset()">Clear</a>
+						</div>
+					</form>
+					</section>
+					<section class="col2 pad_left1">
+						<h2 class="under">Contacts</h2>
+						<div id="address"><span>Country:<br/>
+								City:<br/>
+								Email:</span>
+								Russia<br/>
+								Moscow<br/>
+								<a href="mailto:" class="color2">reply@tagscool.com</a></div>
+						<h2 class="under">Your thoughts</h2>
+						<p>are important for us.</p>
+					</section>
+				</div>
+
+			</article>
+        </ui:define>
+    </ui:composition>
+</html>
