@@ -22,5 +22,7 @@ public interface PasswordManagerLocal {
     UserPassword getByUserId(Long user_id);
     
     UserPassword changeUserPassword(Long userId, String newPassword);
+    
+    void setUser(Long old_user_id, Long new_user_id);
   
 }

@@ -150,4 +150,12 @@ public class PasswordManager implements PasswordManagerLocal {
         }
 
     }
+
+    @Override
+    public void setUser(Long old_user_id, Long new_user_id) {       
+        UserPassword up = getByUserId(old_user_id);
+        up.setUser(um.getUserById(new_user_id));
+        em.merge(up);
+        log.info("UserPassword modyfyed: id= " + up.getId());
+    }
 }

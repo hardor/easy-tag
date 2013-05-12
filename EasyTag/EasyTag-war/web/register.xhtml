@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html [<!ENTITY nbsp "&#160;"> <!ENTITY times "&#215;"> <!ENTITY copy "&#211;">]>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/templates/index/main-template.xhtml">
+        <ui:define name="content">
+            <article id="content">
+                <div class="wrapper">
+                    <section class="col1">
+                        <h2 class="under">Registration form</h2>
+                        <!--<div class="span5"><h:graphicImage  value="img/logo/logo(nofont)1.jpg"/> </div>-->
+                        <h:form id="registration_form" method="post">
+                            <div>
+                                <div  class="wrapper">
+                                    <span>E-mail:</span>
+                                    <h:inputText class="row-fluid search-query" placeholder="Email" type="email" value="#{registrationBean.email}"/>
+                                </div>
+                                <div  class="wrapper">
+                                    <span>Login:</span>
+                                    <h:inputText class="row-fluid search-query" placeholder="Login"  value="#{registrationBean.login}"/>
+                                </div>
+                                <div  class="wrapper">
+                                    <span>Password:</span>
+                                    <h:inputSecret class="row-fluid search-query" placeholder="Password" value="#{registrationBean.password}"/>
+                                </div>
+                                <div  class="textarea_box">
+                                    <span>Confirm password:</span>
+                                    <h:inputSecret class="row-fluid search-query" placeholder="Confirm password" value="#{registrationBean.confirmPassword}"/>
+                                </div>
+                                <h:commandLink  type="submit" class="btn color_4" actionListener="#{registrationBean.registerAction}" value="Go">
+                                    <f:ajax render=":registration_form" execute="@form"/>
+                                </h:commandLink>
+                                <a href="#" onClick="document.getElementById('registration_form').reset()">Clear</a>
+                            </div>
+                        </h:form>
+                    </section>
+                    <section class="col2 pad_left1">
+                        <h2 class="under">Welcome�! :)</h2>
+                        <p>It's quick and easy. We are glad you're joining us!</p>
+                    </section>
+                </div>
+
+            </article>
+        </ui:define>
+    </ui:composition>
+</html>
