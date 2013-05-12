@@ -55,11 +55,12 @@ public class OpenIdBean implements Serializable {
     }
 
     public void bindAction(final ActionEvent evt) {
+        JSFHelper helper = getJSFHelper();
         if (getLogin() == null || getPassword() == null) {
             return;
         }
 
-        User ue = um.getUserById(JSFHelper.getUserId());
+        User ue = um.getUserById(helper.getUserId());
         User vk_ue = um.getUserByLogin(getLogin());
 
 
@@ -70,12 +71,17 @@ public class OpenIdBean implements Serializable {
                 pm.setUser(ue.getUser_id(), vk_ue.getUser_id());
                 // TODO: logging
             } else {
-                JSFHelper.addMessage("openID_messages", FacesMessage.SEVERITY_WARN, "WRONG", "Incorrect password");
+                helper.addMessage("openID_messages", FacesMessage.SEVERITY_WARN, "WRONG", "Incorrect password");
                 // TODO: logging
             }
         } else {
-            JSFHelper.addMessage("openID_messages", FacesMessage.SEVERITY_WARN, "WRONG", "Incorrect login.");
+            helper.addMessage("openID_messages", FacesMessage.SEVERITY_WARN, "WRONG", "Incorrect login.");
             // TODO: logging
         }
     }
+    
+     protected JSFHelper getJSFHelper() {
+        return new JSFHelper();
+    }
+     
 }
