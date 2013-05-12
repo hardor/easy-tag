@@ -54,20 +54,20 @@ public class PasswordRecoveryBean implements Serializable {
     }
     
     public void recoverAction(ActionEvent evt) {       
-                  
+        JSFHelper helper = getJSFHelper();
         if(!validateUserInput()) {
-            JSFHelper.addMessage(FacesMessage.SEVERITY_ERROR, "Validation:", "Check your input and try again.");
+            helper.addMessage(FacesMessage.SEVERITY_ERROR, "Validation:", "Check your input and try again.");
             recoveryStatus = "fail";
             return;
         }
         
         if(!tryRecover(login)) {
-            JSFHelper.addMessage(FacesMessage.SEVERITY_ERROR, "Error:", "Password cannot be recovered.");
+            helper.addMessage(FacesMessage.SEVERITY_ERROR, "Error:", "Password cannot be recovered.");
             recoveryStatus = "fail";
             return;
         }
         
-        JSFHelper.addMessage(FacesMessage.SEVERITY_INFO, "Information:", "New password has been sent to your e-mail.");    
+        helper.addMessage(FacesMessage.SEVERITY_INFO, "Information:", "New password has been sent to your e-mail.");    
         recoveryStatus = "ok";
     }
 
@@ -88,5 +88,9 @@ public class PasswordRecoveryBean implements Serializable {
 
     public void setRecoveryStatus(String recoveryStatus) {
         this.recoveryStatus = recoveryStatus;
+    }
+    
+    protected JSFHelper getJSFHelper() {
+        return new JSFHelper();
     }
 }

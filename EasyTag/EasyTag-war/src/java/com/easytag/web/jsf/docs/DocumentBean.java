@@ -5,7 +5,6 @@ import com.easytag.core.jpa.entity.Document;
 import com.easytag.web.utils.JSFHelper;
 import java.io.Serializable;
 import java.util.List;
-import java.util.ListIterator;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -34,27 +33,30 @@ public class DocumentBean implements Serializable {
     }
 
     public List<Document> getDocumentsByAlbum() {
-        String albumId = JSFHelper.getRequest().getParameter("alb_id");           
+        JSFHelper helper = getJSFHelper();
+        String albumId = helper.getRequest().getParameter("alb_id");           
         return dm.getAllAlbumDocuments(Long.valueOf(albumId));
     }
     
     public List<Document> getDocumentsByAlbumAndUser() {
-        String albumId = JSFHelper.getRequest().getParameter("alb_id");          
-        return dm.getAllAlbumUsersDocuments(JSFHelper.getUserId(),Long.valueOf(albumId));
+        JSFHelper helper = getJSFHelper();
+        String albumId = helper.getRequest().getParameter("alb_id");          
+        return dm.getAllAlbumUsersDocuments(helper.getUserId(),Long.valueOf(albumId));
     }
     
 
     public Document getDocumentById() {
-        String doc_id = JSFHelper.getRequest().getParameter("doc_id");
-        return dm.getFileById(JSFHelper.getUserId(), Long.valueOf(doc_id));
+        JSFHelper helper = getJSFHelper();
+        String doc_id = helper.getRequest().getParameter("doc_id");
+        return dm.getFileById(helper.getUserId(), Long.valueOf(doc_id));
     }
 
     public Document getDocumentById(Long id) {
-        return dm.getFileById(JSFHelper.getUserId(), id);
+        return dm.getFileById(getJSFHelper().getUserId(), id);
     }
 
     public Document getNext() {
-        Long id = Long.valueOf(JSFHelper.getRequest().getParameter("doc_id"));
+        Long id = Long.valueOf(getJSFHelper().getRequest().getParameter("doc_id"));
         System.out.println("getNext: id="+id);
         Document doc = getDocumentById(id);
         System.out.println("getNext: doc="+doc);
@@ -69,7 +71,7 @@ public class DocumentBean implements Serializable {
     }
 
     public Document getPrevious() {
-        Long id = Long.valueOf(JSFHelper.getRequest().getParameter("doc_id"));
+        Long id = Long.valueOf(getJSFHelper().getRequest().getParameter("doc_id"));
         Document doc = getDocumentById(id);
         List<Document> docList = getDocumentsByAlbum();
         int idx = docList.indexOf(doc);
@@ -78,5 +80,9 @@ public class DocumentBean implements Serializable {
             return doc;
         }
         return docList.get(idx - 1);
+    }
+    
+    protected JSFHelper getJSFHelper() {
+        return new JSFHelper();
     }
 }

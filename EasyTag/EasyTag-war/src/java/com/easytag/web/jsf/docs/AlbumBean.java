@@ -18,11 +18,10 @@ import javax.faces.event.ActionEvent;
  */
 @ManagedBean
 @ViewScoped
-public class AlbumBean implements Serializable{
+public class AlbumBean implements Serializable {
 
     @EJB
     private AlbumManagerLocal am;
-    
     private String name;
     private String additional_info;
 
@@ -46,17 +45,21 @@ public class AlbumBean implements Serializable{
     }
 
     public void createAlbum(ActionEvent evt) throws IOException {
-
+        JSFHelper helper = getJSFHelper();
         if (getName() == null || getAdditional_info() == null) {
-            JSFHelper.addMessage("album_messages",FacesMessage.SEVERITY_WARN, "Failed ", "Not valid information");
+            helper.addMessage("album_messages", FacesMessage.SEVERITY_WARN, "Failed ", "Not valid information");
             return;
         }
-       //UserInfoBean ub = new UserInfoBean();      
-        am.createAlbum(JSFHelper.getUserId(), name,additional_info);
-        JSFHelper.addMessage("album_messages",FacesMessage.SEVERITY_INFO, "Success ", "album " + getName() + " is create");
+        //UserInfoBean ub = new UserInfoBean();      
+        am.createAlbum(helper.getUserId(), name, additional_info);
+        helper.addMessage("album_messages", FacesMessage.SEVERITY_INFO, "Success ", "album " + getName() + " is create");
     }
-    
-     public List<Album> getAlbums() {
+
+    public List<Album> getAlbums() {
         return am.getAllAlbums();
+    }
+
+    protected JSFHelper getJSFHelper() {
+        return new JSFHelper();
     }
 }

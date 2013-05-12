@@ -44,7 +44,7 @@ public class UserInfoBean implements Serializable {
      * Creates a new instance of UserInfoBean
      */
     public UserInfoBean() {
-        userId = JSFHelper.getUserId();
+        userId = getJSFHelper().getUserId();
     }
 
     @PostConstruct
@@ -58,7 +58,7 @@ public class UserInfoBean implements Serializable {
     }
 
     public void refreshAction() {
-        userId = JSFHelper.getUserId();
+        userId = getJSFHelper().getUserId();
         if (userId != null && user == null) {
             user = userManager.getUserById(userId);
 
@@ -78,7 +78,7 @@ public class UserInfoBean implements Serializable {
         log.info(information);
         log.info(userId); 
         user = userManager.modifyUserInfo(userId, firstName, lastName, information, email, phone);
-        JSFHelper.addMessage(FacesMessage.SEVERITY_INFO, "Succes:", "Info eddite");
+        helper.addMessage(FacesMessage.SEVERITY_INFO, "Succes:", "Info eddite");
         helper.redirect("/user/profile/index");
     }
 

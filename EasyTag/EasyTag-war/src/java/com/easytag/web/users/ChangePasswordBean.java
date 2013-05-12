@@ -36,12 +36,13 @@ public class ChangePasswordBean implements Serializable {
     }
 
     private boolean validateUserInput() {
+        JSFHelper helper = getJSFHelper();
         if (!StringUtils.isNotEmpty(oldPassword, newPassword, confirmPassword)) {
-            JSFHelper.addMessage(FacesMessage.SEVERITY_ERROR, "Validation Error:", "All fields are required.");
+            helper.addMessage(FacesMessage.SEVERITY_ERROR, "Validation Error:", "All fields are required.");
             return false;
         }
         if (!confirmPassword.equals(newPassword)) {
-            JSFHelper.addMessage(FacesMessage.SEVERITY_ERROR, "Validation Error:", "Confirmation password doesn't match new password.");
+            helper.addMessage(FacesMessage.SEVERITY_ERROR, "Validation Error:", "Confirmation password doesn't match new password.");
             return false;
         }
 
@@ -50,11 +51,11 @@ public class ChangePasswordBean implements Serializable {
     }
 
     private boolean tryChangePassword() {
-
-        Long userId = JSFHelper.getUserId();
+        JSFHelper helper = getJSFHelper();
+        Long userId = helper.getUserId();
 
         if (userId == null) {
-            JSFHelper.addMessage(FacesMessage.SEVERITY_ERROR, "Authentication Error:", "You should log in to change your password.");
+            helper.addMessage(FacesMessage.SEVERITY_ERROR, "Authentication Error:", "You should log in to change your password.");
             return false;
         }
 
@@ -62,7 +63,7 @@ public class ChangePasswordBean implements Serializable {
 
 
         if (pm.checkUserPassword(userId, oldPassword) == null) {
-            JSFHelper.addMessage(FacesMessage.SEVERITY_ERROR, "Password Validation Error:", "Invalid old password.");
+            helper.addMessage(FacesMessage.SEVERITY_ERROR, "Password Validation Error:", "Invalid old password.");
             return false;
 
         }
@@ -74,7 +75,7 @@ public class ChangePasswordBean implements Serializable {
             pm.changeUserPassword(userId, newPassword);
         } catch (Exception ex) {
 
-            JSFHelper.addMessage(FacesMessage.SEVERITY_ERROR, "Server Error:", "Unexpected server error occured.");
+            helper.addMessage(FacesMessage.SEVERITY_ERROR, "Server Error:", "Unexpected server error occured.");
             return false;
         }
 
@@ -92,7 +93,7 @@ public class ChangePasswordBean implements Serializable {
             return;
         }
 
-        JSFHelper.addMessage(FacesMessage.SEVERITY_INFO, "Info:", "Your password has been changed successfully.");
+        getJSFHelper().addMessage(FacesMessage.SEVERITY_INFO, "Info:", "Your password has been changed successfully.");
     }
 
     public String getOldPassword() {
@@ -117,5 +118,9 @@ public class ChangePasswordBean implements Serializable {
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+    
+    protected JSFHelper getJSFHelper() {
+        return new JSFHelper();
     }
 }

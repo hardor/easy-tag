@@ -1,4 +1,4 @@
-package com.tagscool.web.utils;
+package com.easytag.web.utils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -9,10 +9,10 @@ import org.apache.log4j.Logger;
  *
  * @author danon
  */
-public class SessionHelper {
+public class SessionUtils {
 
     public static final String USER_ID_SESSION_ATTR = "user_id";
-    private static final Logger log = Logger.getLogger(SessionHelper.class);
+    private static final Logger log = Logger.getLogger(SessionUtils.class);
 
     public static <T> T getSessionAttribute(Class<T> clazz, final HttpSession session, String name) {
         try {

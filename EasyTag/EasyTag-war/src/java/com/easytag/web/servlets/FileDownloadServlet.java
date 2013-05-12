@@ -4,6 +4,7 @@ import com.easytag.core.CoreConstants;
 import com.easytag.core.ejb.DocumentManagerLocal;
 import com.easytag.core.jpa.entity.Document;
 import com.easytag.web.utils.JSFHelper;
+import com.easytag.web.utils.SessionUtils;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.Closeable;
@@ -47,7 +48,7 @@ public class FileDownloadServlet extends HttpServlet {
 
         // Lookup File by FileId in database.
         // Do your "SELECT * FROM File WHERE FileID" thing.
-        Document file_db = fm.getFileById((Long)JSFHelper.getUserId(),Long.valueOf(fileId));
+        Document file_db = fm.getFileById(SessionUtils.getUserId(request.getSession(true)), Long.valueOf(fileId));
 
         // Check if file is actually retrieved from database.
         if (file_db == null) {

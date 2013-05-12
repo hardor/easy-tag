@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
     <ui:composition>
+        <f:event rendered="#{loginRequired}" type="preRenderView" listener="#{eventListenersBean.loginRequired}" />
         <meta charset="utf-8" />
         <title>#{windowTitle}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />

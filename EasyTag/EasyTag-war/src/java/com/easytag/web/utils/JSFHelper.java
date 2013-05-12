@@ -14,14 +14,24 @@ import javax.servlet.http.HttpSession;
  */
 public class JSFHelper {
 
+    private FacesContext context;
+
     /**
      * Creates new instance with current Faces context.
      */
-    public static FacesContext getFacesContext() {
-        return FacesContext.getCurrentInstance();
-    }    
+    public JSFHelper() {
+        this(FacesContext.getCurrentInstance());
+    }
+    
+    public JSFHelper(FacesContext context) {
+        this.context = context;
+    }
+    
+    public FacesContext getFacesContext() {
+        return context;
+    }
 
-    public static ExternalContext getExternalContext() {
+    public ExternalContext getExternalContext() {
         final FacesContext fc = getFacesContext();
         if (fc == null) {
             return null;
@@ -29,7 +39,7 @@ public class JSFHelper {
         return fc.getExternalContext();
     }
 
-    public static HttpServletRequest getRequest() {
+    public HttpServletRequest getRequest() {
         final ExternalContext ec = getExternalContext();
         if (ec == null) {
             return null;
@@ -53,21 +63,19 @@ public class JSFHelper {
         return request.getSession(create);
     }
     
-    public static Long getUserId() {
-        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-        return (Long) session.getAttribute("user_id");
+    public Long getUserId() {
+        return SessionUtils.getSessionAttribute(Long.class, getSession(true), SessionUtils.USER_ID_SESSION_ATTR);
     }
 
-    public static void setUserId(Long userId) {
-        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-         session.setAttribute("user_id", userId);
+    public void setUserId(Long userId) {
+        SessionUtils.setSessionAttribute(getSession(true), SessionUtils.USER_ID_SESSION_ATTR, userId);
     }
 
-    public static FacesMessage addMessage(FacesMessage.Severity severity, String summary, String details) {
+    public FacesMessage addMessage(FacesMessage.Severity severity, String summary, String details) {
         return JSFHelper.addMessage(getFacesContext(), null, severity, summary, details);
     }
     
-    public static FacesMessage addMessage(String component, FacesMessage.Severity severity, String summary, String details) {
+    public FacesMessage addMessage(String component, FacesMessage.Severity severity, String summary, String details) {
         return JSFHelper.addMessage(getFacesContext(), component, severity, summary, details);
     }
     
