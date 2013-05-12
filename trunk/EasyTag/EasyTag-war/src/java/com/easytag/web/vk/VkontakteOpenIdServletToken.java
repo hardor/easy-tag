@@ -24,18 +24,16 @@ public class VkontakteOpenIdServletToken extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-          System.out.println("VkontakteOpenIdServletToken\n");
+
         try {
             String code = request.getParameter("code");
             String requestURL = VkontakteUtils.getSecondVkontakteOauthUrl(code);
-            
+
 
             HttpSession session = request.getSession();
-            System.out.println(request.getRequestURI());
-             System.out.println(request.getContextPath());
-              System.out.println(request.getServletPath());
+
             try {
-                System.out.println();
+
                 HttpUtility.sendGetRequest(requestURL);
                 String resp = HttpUtility.readSingleLineRespone();
                 response.sendRedirect("/EasyTag-war");

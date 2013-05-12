@@ -1,13 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<!DOCTYPE html
-   PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
-
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-  <head>
-  </head>
-  <body id="page1">
-	<meta http-equiv="Refresh" content="0; url=index.html" />
-  </body>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html [<!ENTITY nbsp "&#160;"> <!ENTITY times "&#215;"> <!ENTITY copy "&#211;">]>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="/templates/index/main-template.xhtml">
+        <ui:define name="content">
+           <article id="content">
+                    <div>     
+                        <li><img src="images/img1.png" alt=""/></li>
+                    </div>
+                    <div class="wrapper">
+                        <section class="cols">
+                            <h3><span class="dropcap">A</span>Great</h3>
+                            <p class="pad_bot1">We have an idea how to make your life easier and better!</p>
+                            <a href="#" class="link1">Read More</a>
+                        </section>
+                        <section class="cols pad_left1">
+                            <h3><span class="dropcap">B</span>Useful</h3>Everyone has lots of knowledge to keep. Keep it here! Tag it and search.<p/>
+                            <a href="#" class="link1">Read More</a>
+                        </section>
+                        <section class="cols pad_left1">
+                            <h3><span class="dropcap">C</span>Quick</h3>
+                            <p class="pad_bot1"> Easily access your notes and other material anywhere, anytime. <a href="http://blog.templatemonster.com/free-website-templates/" target="_blank">Join us</a> and get started right now!</p>
+                            <a href="#" class="link1">Read More</a>
+                        </section>
+                        <section class="cols pad_left1">
+                            <h3><span class="dropcap">D</span>Helpful</h3>
+                            <p class="pad_bot1"> We are trying hard to make it better for you!  </p>
+                            <a href="#" class="link1">Read More</a>
+                        </section>
+                    </div> 
+                </article>
+        </ui:define>
+    </ui:composition>
 </html>
