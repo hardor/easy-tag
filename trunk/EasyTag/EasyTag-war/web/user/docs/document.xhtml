@@ -18,6 +18,10 @@
                     <h:form id="album_form">                       
                         <div>    
                             <h:inputText value="#{documentBean.documentById.name}"/>
+                            <h:link outcome="editTags" value="Edit Tags">
+                                <f:param name="alb_id" value="#{param['alb_id']}"/>
+                                <f:param name="doc_id" value="#{param['doc_id']}"/>
+                            </h:link>
                         </div>
 
                         <div >

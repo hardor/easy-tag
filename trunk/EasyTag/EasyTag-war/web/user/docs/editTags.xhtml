@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html [<!ENTITY nbsp "&#160;"> <!ENTITY times "&#215;"> <!ENTITY copy "&#211;">]>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/templates/main-template.xhtml">
+        <ui:define name="content">
+            <div>
+                <div>
+                    <div class="title">
+                        <h4>
+                            <i class="icon-book"></i>
+                            <span>Edit Tags</span>
+                        </h4>
+                    </div>
+                    <h:form id="album_form" prependId="false">                       
+                        <div>    
+                            <h:inputText value="#{documentBean.documentById.name}"/>
+                        </div>
+
+                        <div >                                         
+                            <img id="tagMe" src="#{request.contextPath}/file?id=#{param['doc_id']}"/>                                                            
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+            <script>
+                //<![CDATA[
+                
+                if (window.jQuery === undefined) {
+                    document.write('\x3Cscript src="#{request.contextPath}/js/jquery.js" type="text/javascript">\x3C/script>');
+                    document.write('\x3Cscript src="#{request.contextPath}/js/jquery-ui-1.8.23.custom.min.js" type="text/javascript">\x3C/script>');
+                }
+                
+                //]]>
+            </script>
+            <script src="#{request.contextPath}/js/jquery.tag.js"></script>
+            <script>
+                $(function() {
+                    $("#tagMe").tag({
+                            showTag: 'always',
+                            canDelete: true,
+                            canTag: true,
+                            defaultTags: [
+                                    {'id':1,'label':'Uncle jack','width':150,'height':190,'top':50,'left':160},
+                                    {'id':2,'label':'Baby john','width':100,'height':150,'top':250,'left':280}
+                            ],
+                            save: function(width,height,top_pos,left,label,the_tag){
+                                    //alert('I can save this tag ('+width+','+height+','+top_pos+','+left+','+label+')');
+                                    /* once the ajax is done I need to get the ID here and then set it on the tag */
+                                    $.get( 
+                                        "#{request.contextPath}/webresources/tags/add",  
+                                        {tag: label, doc_id: "#{param['doc_id']}", x: left, y: top, 'width': width, 'height': height},
+                                        function (data) {
+                                            alert('data');
+                                        },  
+                                        "json"
+                                    );
+                                  }
+                    });
+                });
+            </script>
+        </ui:define>     
+    </ui:composition>
+
+</html>

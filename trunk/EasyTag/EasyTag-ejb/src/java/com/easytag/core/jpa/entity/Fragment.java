@@ -54,6 +54,10 @@ public class Fragment implements Serializable {
     @JoinColumn(name = "fragment_group_id")
     @ManyToOne
     private FragmentGroup fragmentGroup;
+    
+    @JoinColumn(name = "document_id")
+    @ManyToOne
+    private Document document;
        
     @JoinColumn(name = "album_id")
     @ManyToOne
@@ -167,6 +171,14 @@ public class Fragment implements Serializable {
 
     public void setExtraInfo(String extraInfo) {
         this.extraInfo = extraInfo;
+    }
+
+    public Document getDocument() {
+        return document;
+    }
+
+    public void setDocument(Document document) {
+        this.document = document;
     }
 
     @Override
