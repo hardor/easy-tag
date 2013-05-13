@@ -80,8 +80,7 @@ public class OpenIdBean implements Serializable {
         }
     }
     
-     protected JSFHelper getJSFHelper() {
+    protected JSFHelper getJSFHelper() {
         return new JSFHelper();
     }
-     
 }

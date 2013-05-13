@@ -2,24 +2,31 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
     <ui:composition>
         <div class="body1">
             <div class="body2">
                 <div class="main">
                     <!-- header -->		
-                    <header/>
+                    <header> 
                     <div class="wrapper">
                         <h1><h:link outcome="index" id="logo">Progress Business Company</h:link></h1>
                         <nav>
                             <ul id="menu">
-                                <li id="nav1" class="active"><h:link outcome="index">Home<span>Welcome!</span></h:link></li>
-                                <li id="nav4"><h:link outcome="about">About Us<span>The best</span></h:link></li>
-                                <li id="nav3"><h:link outcome="register">Sign Up<span>Start Using</span></h:link></li>
-                                <li id="nav2"><h:link outcome="login">Log In<span>Get Into</span></h:link></li>
+                                <li id="nav1" class="active"><h:link outcome="/index">Home<span>Welcome!</span></h:link></li>
+                                <li id="nav4"><h:link outcome="/about">About Us<span>The best</span></h:link></li>
+                                <c:if test="#{!loginBean.loggedIn}">
+                                <li id="nav3"><h:link outcome="/register">Sign Up<span>Start Using</span></h:link></li>
+                                <li id="nav2"><h:link outcome="/login">Log In<span>Get Into</span></h:link></li>
+                                </c:if>
+                                <c:if test="#{loginBean.loggedIn}">
+                                <li id="nav2"><h:link outcome="/user/index">Account<span>Enter site</span></h:link></li>
+                                </c:if>
                             </ul>
                         </nav>
-                    </div> 
+                    </div>
+                    </header>
                 </div>
             </div>
         </div>
