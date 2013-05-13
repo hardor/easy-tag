@@ -2,9 +2,17 @@ package com.easytag.core.ejb;
 
 import com.easytag.core.jpa.entity.Album;
 import com.easytag.core.jpa.entity.Document;
+import com.easytag.core.jpa.entity.Fragment;
+import com.easytag.core.jpa.entity.Tag;
 import com.easytag.core.jpa.entity.User;
+import com.easytag.core.util.CollectionUtils;
+import com.easytag.core.util.StringUtils;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.StringTokenizer;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -140,4 +148,57 @@ public class DocumentManager implements DocumentManagerLocal {
             return null;
         }
     }
+  
+    @Override
+    public Fragment addFragment(Long userId, Long documentId, String tag, long x, long y, long width, long height) {
+        // check user
+        if (documentId == null || userId == null) {
+            return null;
+        }
+        
+        Document doc = em.find(Document.class, documentId);
+        if (doc == null || !userId.equals(doc.getCreatedBy().getUser_id())) {
+            return null;
+        }
+        
+        Set<Tag> tags = createTags(tag);
+        
+        // create Fragment
+        Fragment f = new Fragment();
+        f.setAlbum(doc.getAlbum());
+        f.setDocument(doc);
+        f.setName(tag);
+        f.setTags(tags);
+        f.setFirstCoordinateX(x);
+        f.setFirstCoordinateY(y);
+        f.setSecondCoordinateX(x+width);
+        f.setSecondCoordinateY(y+height);
+        em.persist(f);
+        
+        return f;
+    }
+    
+    private Set<Tag> createTags(String tagsStr) {
+        if (StringUtils.isEmpty(tagsStr)) {
+            return Collections.EMPTY_SET;
+        }
+        Set<Tag> tags = new HashSet<Tag>();
+        StringTokenizer st = new StringTokenizer(tagsStr, ";,");
+        while (st.hasMoreTokens()) {
+            String tagStr = st.nextToken();
+            Query q = em.createQuery("select t from Tag t where t.name = :name", Tag.class);
+            q.setParameter("name", tagStr);
+            q.setMaxResults(1);
+            Tag tag = CollectionUtils.getFirstElement((List<Tag>) q.getResultList());
+            if (tag == null) {
+                // create new tag
+                tag = new Tag();
+                tag.setName(tagStr);
+                em.persist(tag);
+            }
+            tags.add(tag);
+        }
+        return tags;
+    }
+    
 }
