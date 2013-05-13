@@ -57,8 +57,7 @@ public class FileUploadController implements Serializable {
     }
   
     public void setFile(UploadedFile file) {
-        HttpServletRequest request = getJSFHelper().getRequest();       
-        setAlbumId(request.getParameter("alb_id"));
+              
         this.file = file;
     }
         
@@ -89,18 +88,22 @@ public class FileUploadController implements Serializable {
             in.close();
             out.flush();
             out.close();
-
+            
             String name = getFile().getFileName();
             String Url = tempFile.getName();
             String contentType = getFile().getContentType();
             Long size = tempFile.length();
             Long user_id = helper.getUserId();
             String extraInfo = "general";   
-           
-            if ("/user/profile/edit.xhtml".equals(helper.getRequest().getPathInfo())) {
-                Document newDocument = fm.createFile(name, Url, contentType, size, user_id, extraInfo, am.getAlbumByName("Avatars").getId());
+            
+             //avatar or simple document
+            if ("/user/profile/edit.xhtml".equals(helper.getRequest().getServletPath())) {
+                setAlbumId(am.getAlbumByName("Avatars").getId().toString());
+                Document newDocument = fm.createFile(name, Url, contentType, size, user_id, extraInfo, Long.valueOf(this.getAlbumId()));
                 userInfo.setAvatar(Url);
             } else {
+                setAlbumId(helper.getRequest().getParameter("alb_id"));
+                System.out.println("no avatar");
                 Document newDocument = fm.createFile(name, Url, contentType, size, user_id, extraInfo, Long.valueOf(this.getAlbumId()));
             }
             helper.addMessage(FacesMessage.SEVERITY_INFO, "Success ", "document " + name + " is create!");
