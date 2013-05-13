@@ -65,14 +65,18 @@
                             <div class="form-row control-group row-fluid">
                                 <label class="control-label span3" for="normal-field">Avatar (max 100 kb)</label>
                                 <div class="controls span9">
-                                    <h:graphicImage value="/#{userInfoBean.avatar}" class="height_medium"/>
+                                    <h:graphicImage value="#{userInfoBean.avatar}" class="height_medium"/>
                                     <br/> 
-                                    <p:messages showDetail="true"/>
-                                                                        <p:fileUpload allowTypes="*.jpe?g; *.png; *.gif;" value="#{fileUploadController.file}" mode="simple" invalidFileMessage="Invalid file type" invalidSizeMessage="Invalid file size (max 100 kb)" sizeLimit="100000"/>
-                                    <p:commandButton value="Submit" ajax="false"   actionListener="#{fileUploadController.upload}">  
-                                        <f:ajax execute="@this" render="@all"/>
-                                    </p:commandButton>
-                                    <br/> 
+                                    <div class="controls span9">
+                                        <p:messages showDetail="true"/>
+                                        
+                                        <p:fileUpload allowTypes="/(\.|\/)(jpe?g|png|gif)$/" value="#{fileUploadController.file}" mode="simple" invalidFileMessage="Invalid file type" invalidSizeMessage="Invalid file size (max 100 kb)" sizeLimit="100000"/>
+                                       
+                                        <p:commandButton value="Submit" ajax="false"   actionListener="#{fileUploadController.upload}">  
+                                            <f:ajax execute="@this" render="@all"/>
+                                        </p:commandButton>
+                                        <br/> 
+                                    </div>  
                                 </div>
                             </div>   
                         </h:form> 

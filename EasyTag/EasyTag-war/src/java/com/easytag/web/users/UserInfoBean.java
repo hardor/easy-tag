@@ -76,7 +76,7 @@ public class UserInfoBean implements Serializable {
         log.info(email);
         log.info(phone);
         log.info(information);
-        log.info(userId); 
+        log.info(userId);
         user = userManager.modifyUserInfo(userId, firstName, lastName, information, email, phone);
         helper.addMessage(FacesMessage.SEVERITY_INFO, "Succes:", "Info eddite");
         helper.redirect("/user/profile/index");
@@ -155,16 +155,25 @@ public class UserInfoBean implements Serializable {
     }
 
     public String getAvatar() {
-        String avatar = user.getAvatar();  
-        if (getUserId() == null || avatar == null) {
+        String avatar = user.getAvatar();
+        
+        if (avatar == null) {
             avatar = "/img/avatar/default_avatar.png";
-        } else {
+        } else if ("/img/avatar/default_avatar.png".equals(avatar)) {
+            return avatar;
+            
+        } else  if ("http".equals(avatar.substring(0, 4))){
+            return avatar;
+        }
+        else{
             avatar = "/file?id=" + fm.getFileByUrl(getUserId(), avatar).getId();
+            return avatar;
         }
         return avatar;
+        
     }
 
-    public void setAvatar(String avatar) {       
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
         userManager.setAvatar(getUserId(), avatar);
     }

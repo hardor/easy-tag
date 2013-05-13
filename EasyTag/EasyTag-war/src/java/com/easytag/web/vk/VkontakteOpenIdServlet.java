@@ -67,11 +67,11 @@ public class VkontakteOpenIdServlet extends HttpServlet {
                 
                 session.setAttribute("user_id", um.getUserByLogin(uid).getUser_id());
              //   loginB.setLoggedIn(true);
-                response.sendRedirect("faces/user/index.xhtml");                
+                response.sendRedirect("user/index.xhtml");                
             }else{
                 session.setAttribute("user_id", um.getUserByLogin(uid).getUser_id());
                // loginB.setLoggedIn(true);
-                response.sendRedirect("faces/user/index.xhtml");                
+                response.sendRedirect("user/index.xhtml");                
             }       
          
 

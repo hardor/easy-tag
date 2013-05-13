@@ -57,13 +57,13 @@ public class DocumentBean implements Serializable {
 
     public Document getNext() {
         Long id = Long.valueOf(getJSFHelper().getRequest().getParameter("doc_id"));
-        System.out.println("getNext: id="+id);
+        
         Document doc = getDocumentById(id);
-        System.out.println("getNext: doc="+doc);
+      
         List<Document> docList = getDocumentsByAlbum();
-        System.out.println("getNext: docList="+docList);
+       
         int idx = docList.indexOf(doc);
-        System.out.println("getNext: idx="+idx+ " id="+id);
+      
         if (idx < 0 || idx + 1 == docList.size()) {
             return doc;
         }
@@ -75,7 +75,7 @@ public class DocumentBean implements Serializable {
         Document doc = getDocumentById(id);
         List<Document> docList = getDocumentsByAlbum();
         int idx = docList.indexOf(doc);
-         System.out.println("getPrevious: idx="+idx+ " id="+id);
+        
         if (idx <= 0) {
             return doc;
         }
