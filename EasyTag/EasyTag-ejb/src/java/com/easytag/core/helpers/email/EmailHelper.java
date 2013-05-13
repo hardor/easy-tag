@@ -10,10 +10,10 @@ public class EmailHelper {
     
     public static final String PASSWORD_RECOVERY_TEMPLATE = 
             "<html><body><p>Hello, {0}. </p>\n"
-            + "<p>Password from your <a href=\"http://tagscool.com/EasyTag-war/faces/login.xhtml?from=recovery-email\">tagscool.com</a> "
+            + "<p>Password from your <a href=\"http://tagscool.com/login.xhtml?from=recovery-email\">tagscool.com</a> "
             + "account has been reset. \n"
             + "New password: <strong>{1}</strong></p>\n\n"
-            + "<p>--<br/>\nThank you for choosing our services. Stay with us! <a href=\"http://tagscool.com/EasyTag-war/\">tagscool.com</a></p>\n<br/>\n<br/>\n"
+            + "<p>--<br/>\nThank you for choosing our services. Stay with us! <a href=\"http://tagscool.com/\">tagscool.com</a></p>\n<br/>\n<br/>\n"
             + "<p>--<br/>\nPlease, do not reply to this messages. You can contact our administrator via admin@tagscool.com</p></body></html>";
     
     public static EmailObject createEmailFromTemplate(String subject, String template, Object... params) {
