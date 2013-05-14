@@ -43,24 +43,51 @@
                             showTag: 'always',
                             canDelete: true,
                             canTag: true,
-                            defaultTags: [
-                                    {'id':1,'label':'Uncle jack','width':150,'height':190,'top':50,'left':160},
-                                    {'id':2,'label':'Baby john','width':100,'height':150,'top':250,'left':280}
-                            ],
+//                            defaultTags: [
+//                                    {'id':1,'label':'Uncle jack','width':150,'height':190,'top':50,'left':160},
+//                                    {'id':2,'label':'Baby john','width':100,'height':150,'top':250,'left':280}
+//                            ],
                             save: function(width,height,top_pos,left,label,the_tag){
-                                    //alert('I can save this tag ('+width+','+height+','+top_pos+','+left+','+label+')');
                                     /* once the ajax is done I need to get the ID here and then set it on the tag */
-                                    $.get( 
-                                        "#{request.contextPath}/webresources/tags/add",  
-                                        {tag: label, doc_id: "#{param['doc_id']}", x: left, y: top, 'width': width, 'height': height},
-                                        function (data) {
-                                            alert('data');
-                                        },  
-                                        "json"
-                                    );
+                                    saveFragment(width,height,top_pos,left,label,the_tag);
                                   }
                     });
                 });
+                
+                var currentTag = null;
+                
+                function saveFragment(width,height,top_pos,left,label,the_tag) {
+                    var url = "#{request.contextPath}/webresources/tags/add?";
+                    url = addParam(url, "doc_id", "#{param['doc_id']}");
+                    url = addParam(url, "tag", label);
+                    url = addParam(url, "x", left);
+                    url = addParam(url, "y", top_pos);
+                    url = addParam(url, "width", width);
+                    url = addParam(url, "height", height);
+                    currentTag = the_tag;
+                    $.ajax({url: url, 
+                            data: null,
+                            success: function (data, textStatus, jqXHR) {
+                                if (currentTag != null) {
+                                    currentTag.attr('id', 'tag_'+data.fragmentId);
+                                    currentTag = null;
+                                }
+                            },
+                            error: function (data) {
+                                console.log("Failed to save the tag.");
+                                if (currentTag != null) {
+                                    currentTag.remove();
+                                    currentTag = null;
+                                }
+                            },
+                            dataType: "json" 
+                        });
+                }
+                
+                function addParam(url, param, value) {
+                    return url + param + "=" + value + "&amp;";
+                }
+                
             </script>
         </ui:define>     
     </ui:composition>
