@@ -35,16 +35,16 @@ public class TagsREST {
             @Context HttpServletRequest request, 
             @QueryParam("tag") String tag,
             @QueryParam("doc_id") Long documentId,
-            @QueryParam("x") Long x,
-            @QueryParam("y") Long y,
-            @QueryParam("width") Long width,
-            @QueryParam("height") Long height
+            @QueryParam("x") Double x,
+            @QueryParam("y") Double y,
+            @QueryParam("width") Double width,
+            @QueryParam("height") Double height
     ) {
         Long userId = SessionHelper.getUserId(request.getSession());
-        Fragment t = dm.addFragment(userId, documentId, tag, x, y, width, height);
+        Fragment t = dm.addFragment(userId, documentId, tag, x.longValue(), y.longValue(), width.longValue(), height.longValue());
         if (t != null) {
-            return "{fragmentId: " + t.getId().toString() + "}";
-        } else return "{fragmentId: -1}";
+            return "{\"fragmentId\": " + t.getId().toString() + "}";
+        } else return "{\"fragmentId\": -1}";
         
     }
 }
