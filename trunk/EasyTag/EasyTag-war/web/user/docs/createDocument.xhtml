@@ -7,6 +7,12 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition template="/templates/main-template.xhtml">
         <ui:define name="content">
+            <h:link outcome="index" value="My Albums"/><br/>       
+            <h:form>
+                <h:commandLink action="#{albumBean.goAlbumPage}" value="Back to #{albumBean.albumName} album">
+                    <f:param name="alb_id" value="#{param['alb_id']}"/>
+                </h:commandLink>  <br/>
+            </h:form>
             <div class="span7">
                 <div class="box paint color_7">
                     <div class="title">
@@ -18,11 +24,11 @@
                     <div class="content">
                         <h:form id="document_form" enctype="multipart/form-data">    
                             <div class="form-row control-group row-fluid">
-                                 <div class="controls span9">
+                                <div class="controls span9">
                                     <p:messages showDetail="true"/>
                                     <p:fileUpload allowTypes="/(\.|\/)(jpe?g|png|gif)$/" value="#{fileUploadController.file}" mode="simple" invalidFileMessage="Invalid file type" invalidSizeMessage="Invalid file size (max 100 kb)" sizeLimit="100000"/>
                                     <p:commandButton value="Submit" ajax="false"   actionListener="#{fileUploadController.upload}">  
-                                       <f:param name="alb_id" value="#{param['alb_id']}"/>
+                                        <f:param name="alb_id" value="#{param['alb_id']}"/>
                                     </p:commandButton>                            
                                 </div>                                
                             </div>

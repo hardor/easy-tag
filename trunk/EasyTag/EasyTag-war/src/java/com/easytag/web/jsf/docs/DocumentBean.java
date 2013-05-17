@@ -19,7 +19,7 @@ import javax.faces.event.ActionEvent;
 public class DocumentBean implements Serializable {
 
     @EJB
-    private DocumentManagerLocal dm;    
+    private DocumentManagerLocal dm;
 
     public DocumentBean() {
     }
@@ -34,16 +34,32 @@ public class DocumentBean implements Serializable {
 
     public List<Document> getDocumentsByAlbum() {
         JSFHelper helper = getJSFHelper();
-        String albumId = helper.getRequest().getParameter("alb_id");           
+        String albumId = helper.getRequest().getParameter("alb_id");
         return dm.getAllAlbumDocuments(Long.valueOf(albumId));
     }
-    
+
     public List<Document> getDocumentsByAlbumAndUser() {
         JSFHelper helper = getJSFHelper();
-        String albumId = helper.getRequest().getParameter("alb_id");          
-        return dm.getAllAlbumUsersDocuments(helper.getUserId(),Long.valueOf(albumId));
+        String albumId = helper.getRequest().getParameter("alb_id");
+        return dm.getAllAlbumUsersDocuments(helper.getUserId(), Long.valueOf(albumId));
     }
     
+        public List<Document> getDocumentsByUser() {
+        JSFHelper helper = getJSFHelper();       
+        return dm.getUserDocuments(helper.getUserId());
+    }
+
+    public int NumDocInAlbum(Long album_id) {
+        JSFHelper helper = getJSFHelper();
+      
+        List<Document> docs = dm.getAllAlbumUsersDocuments(helper.getUserId(), album_id);
+       
+        if (docs == null) {
+            return 0;
+        } else {
+           return docs.size();
+        }
+    }
 
     public Document getDocumentById() {
         JSFHelper helper = getJSFHelper();
@@ -57,13 +73,13 @@ public class DocumentBean implements Serializable {
 
     public Document getNext() {
         Long id = Long.valueOf(getJSFHelper().getRequest().getParameter("doc_id"));
-        
+
         Document doc = getDocumentById(id);
-      
+
         List<Document> docList = getDocumentsByAlbum();
-       
+
         int idx = docList.indexOf(doc);
-      
+
         if (idx < 0 || idx + 1 == docList.size()) {
             return doc;
         }
@@ -75,13 +91,19 @@ public class DocumentBean implements Serializable {
         Document doc = getDocumentById(id);
         List<Document> docList = getDocumentsByAlbum();
         int idx = docList.indexOf(doc);
-        
+
         if (idx <= 0) {
             return doc;
         }
         return docList.get(idx - 1);
     }
-    
+
+    public void deleteDocument() {
+        JSFHelper helper = getJSFHelper();
+        Long docId = Long.valueOf(helper.getRequest().getParameter("doc_id"));
+        dm.deleteDocument(docId);
+    }
+
     protected JSFHelper getJSFHelper() {
         return new JSFHelper();
     }
