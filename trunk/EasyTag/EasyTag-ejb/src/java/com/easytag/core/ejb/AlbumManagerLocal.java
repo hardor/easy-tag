@@ -5,6 +5,7 @@
 package com.easytag.core.ejb;
 
 import com.easytag.core.jpa.entity.Album;
+import com.easytag.core.jpa.entity.User;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -25,7 +26,9 @@ public interface AlbumManagerLocal {
 
     List<Album> getAllAlbums();
 
-    Album modifyAlbum(Long userId, String name, String surname, String information, String email, String phone);
+    Album modifyAlbum(Long album_id,String name,String information);
 
     void deleteAlbum(Long album_id);
+    
+    List<Album> getAlbumsByUser(User user);
 }

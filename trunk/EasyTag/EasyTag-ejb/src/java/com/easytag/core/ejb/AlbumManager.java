@@ -1,6 +1,8 @@
 package com.easytag.core.ejb;
 
 import com.easytag.core.jpa.entity.Album;
+import com.easytag.core.jpa.entity.User;
+import java.util.ArrayList;
 import com.easytag.core.jpa.entity.Document;
 import java.util.Date;
 import java.util.List;
@@ -81,10 +83,30 @@ public class AlbumManager implements AlbumManagerLocal {
             return null;
         }
     }
+      
+    @Override    
+     public List<Album> getAlbumsByUser(User user){
+        List<Album> result = new ArrayList();
+        if(user == null) return result;
+        result = em.createQuery("SELECT a FROM Album a where a.user=:currentUser").setParameter("currentUser", user).getResultList();
+        System.out.println("user: "+user+"  his alboms: "+result);
+        return result;
+     }
+
 
     @Override
-    public Album modifyAlbum(Long userId, String name, String surname, String information, String email, String phone) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Album modifyAlbum(Long album_id, String name, String information) {
+        if (album_id == null) {
+            return null;
+        } else {
+            Album album = em.find(Album.class, album_id);
+            if (album != null) {
+                album.setName(name);
+                album.setAdditionalInfo(information);           
+                em.merge(album);                
+            }
+            return album;
+        }
     }
 
     @Override
@@ -97,4 +119,5 @@ public class AlbumManager implements AlbumManagerLocal {
             em.remove(ae);
         }
     }
+
 }

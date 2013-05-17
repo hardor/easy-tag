@@ -2,41 +2,54 @@
 <!DOCTYPE html [<!ENTITY nbsp "&#160;"> <!ENTITY times "&#215;"> <!ENTITY copy "&#211;">]>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition template="/templates/main-template.xhtml">
         <ui:param name="windowTitle" value="Test"/>
-        
-        <ui:define name="content">
-           <h:link outcome="/user/docs/index.xhtml" value="My Albums"></h:link><br/>
-           <h:link outcome="/user/docs/createAlbum.xhtml" value="Create new Album"></h:link>
-        </ui:define>
 
-        <h:form>
-                <table>
+        <ui:define name="content">
+            <h:link outcome="/user/docs/index.xhtml" value="My Albums"></h:link><br/>
+            <h:link outcome="/user/docs/createAlbum.xhtml" value="Create new Album"></h:link>
+            <h2>Last Image</h2>
+            <h:form>
+                <table cellpadding="0" cellspacing="0" border="1">
                     <tr>                       
                         <td>Name</td>
-                        <!--<td>Iinformation</td>-->                        
+                        <td>Iinformation</td>                        
                         <td>Created By</td> 
                         <td>dateCreation</td>
-                        <td>Albums</td>
+                        <td>Album</td>
+                        <td>Image</td>
 
                     </tr>
 
-                    <ui:repeat value="#{documentBean.documents}" var="document">
+                    <ui:repeat value="#{documentBean.documentsByUser}" var="document" >                        
                         <tr>                           
-                            <td>                        
-                                <h:link value="#{document.name}" outcome="document">   
-                                    <f:param name="alb_id" value="#{param['alb_id']}"/>
+                            <td> 
+                                <h:link value="#{document.name}" outcome="/user/docs/document">   
+                                    <f:param name="alb_id" value="#{document.album.id}"/>
                                     <f:param name="doc_id" value="#{document.id}"/>                                    
-                                </h:link>                         
+                                </h:link> 
                             </td>
-<!--                            <td>#{document.information}</td>-->
+                            <td>#{document.information}</td>
                             <td>#{document.createdBy.firstName}</td> 
                             <td>#{document.dateCreation}</td> 
-
-                        </tr>                
+                            <td>
+                                <h:link value="#{document.album.name}" outcome="/user/docs/library.xhtml">   
+                                    <f:param name="alb_id" value="#{document.album.id}"/>                                
+                                </h:link> 
+                            </td>
+                            <td>
+                                <h:link outcome="/user/docs/document">   
+                                    <h:graphicImage value="/file?id=#{document.id}" class="height_medium"/>
+                                    <f:param name="alb_id" value="#{document.album.id}"/>
+                                    <f:param name="doc_id" value="#{document.id}"/>   
+                                </h:link> 
+                            </td>  
+                        </tr>                        
                     </ui:repeat>
                 </table>
             </h:form>
+        </ui:define>
     </ui:composition>
 </html>
