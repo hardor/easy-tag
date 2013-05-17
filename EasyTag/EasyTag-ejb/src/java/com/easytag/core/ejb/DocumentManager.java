@@ -250,5 +250,17 @@ public class DocumentManager implements DocumentManagerLocal {
             em.remove(de);
         }
     }
+
+    @Override
+    public List<Document> getUserDocuments(Long user_id) {
+    Query q = em.createNamedQuery("Document.findByUser");
+        q.setParameter("user_id", user_id);
+        List<Document> documents = q.getResultList();
+        if (!documents.isEmpty()) {
+            return documents;
+        } else {
+            return null;
+        }
+    }
     
 }

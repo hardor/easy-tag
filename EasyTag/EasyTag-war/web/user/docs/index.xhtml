@@ -9,32 +9,44 @@
         <ui:define name="content">            
             <h:link outcome="createAlbum" value="Create new Album"></h:link>
             <h:form>
-            <table>
-                <tr>                    
-                    <td>Name</td>
-                    <td>AdditionalInfo</td>                        
-                    <td>FirstName</td> 
-                    <td>dateCreation</td>
-                    <td>NumberPicture</td>
-                  
-                </tr>
-            
-            <ui:repeat value="#{albumBean.albums}" var="album">
-                    <tr>                        
-                        <td>
-                            <h:link value="#{album.name}" outcome="library">
-                                <f:param name="alb_id" value="#{album.id}"/>
-                            </h:link>
-                        </td>
-                        <td>#{album.additionalInfo}</td>
-                        <td>#{album.user.firstName}</td> 
-                        <td>#{album.dateCreation}</td> 
-                        <td>#{album.number}</td>                         
-                 
-                    </tr>                
-                </ui:repeat>
-            </table>
-                </h:form>
+                <table>
+                    <tr>                    
+                        <td>Name</td>
+                        <td>Additional Info</td>                        
+                        <td>First Name</td> 
+                        <td>Date Creation</td>
+                        <td>Number Of Document</td>
+                        <td>Edit Album</td>
+                        <td>Delete Album</td>
+
+                    </tr>
+
+                    <ui:repeat value="#{albumBean.albums}" var="album">
+                        <tr>                        
+                            <td>
+                                <h:link value="#{album.name}" outcome="library">
+                                    <f:param name="alb_id" value="#{album.id}"/>
+                                </h:link>
+                            </td>
+                            <td>#{album.additionalInfo}</td>
+                            <td>#{album.user.firstName}</td> 
+                            <td>#{album.dateCreation}</td> 
+                            <td>#{documentBean.NumDocInAlbum(album.id)}</td>
+                            <td>
+                                <h:commandButton id="Edit" value="Edit" actionListener="#{albumBean.editAlbum()}">
+                                    <f:ajax execute="@this" render="@form"/>
+                                </h:commandButton>
+                            </td> 
+                            <td>
+                                <h:commandButton id="Delete" value="Delete" actionListener="#{albumBean.deleteAlbum(album.id)}">
+                                    <f:ajax execute="@this" render="@form"/>
+                                </h:commandButton>
+                            </td>    
+
+                        </tr>                
+                    </ui:repeat>
+                </table>
+            </h:form>
         </ui:define>
     </ui:composition>
 </html>

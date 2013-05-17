@@ -103,12 +103,11 @@ public class FileUploadController implements Serializable {
                 userInfo.setAvatar(Url);
             } else {
                 setAlbumId(helper.getRequest().getParameter("alb_id"));
-                System.out.println("no avatar");
+              
                 Document newDocument = fm.createFile(name, Url, contentType, size, user_id, extraInfo, Long.valueOf(this.getAlbumId()));
             }
             helper.addMessage(FacesMessage.SEVERITY_INFO, "Success ", "document " + name + " is create!");
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+        } catch (IOException e) {           
             e.printStackTrace();
         }
     }

@@ -47,8 +47,7 @@ public class LoginzaServlet extends HttpServlet {
             Gson gson = new Gson();
             int[] ints = {1, 2, 3, 4, 5};
             String[] strings = {"abc", "def", "ghi"};
-            System.out.println(gson.toJson(ints));
-            System.out.println(gson.toJson(strings));
+          
         } finally {            
             out.close();
         }

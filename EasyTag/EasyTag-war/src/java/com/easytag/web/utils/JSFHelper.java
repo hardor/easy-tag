@@ -84,6 +84,15 @@ public class JSFHelper {
         handler.handleNavigation(getFacesContext(), null, nav+"?faces-redirect=true");
     }
     
+public void redirect(String nav, String... params) {
+        NavigationHandler handler = getApplication().getNavigationHandler();
+        nav += "?faces-redirect=true&";
+        for (int i=0; i<params.length-1; i+=2) {
+            nav += params[i] + "=" + params[i+1];
+        }
+        handler.handleNavigation(getFacesContext(), null, nav);
+    }
+    
     public static FacesMessage addMessage(FacesContext fc, String component, FacesMessage.Severity severity, String summary, String details) {
         return addMessage(fc, component, new FacesMessage(severity, summary, details));
     }

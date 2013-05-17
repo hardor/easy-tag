@@ -6,15 +6,17 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition template="/templates/main-template.xhtml">
-        <ui:define name="content">            
-            <h:link outcome="createDocument" value="Create new Document">
+        <ui:define name="content">       
+            <h:link outcome="index" value="My Albums"/><br/>   
+            <h:link outcome="createDocument" value="Create new Document"><br/>
                 <f:param name="alb_id" value="#{param['alb_id']}"/>
             </h:link>
+          
             <h:form>
                 <table>
                     <tr>                       
                         <td>Name</td>
-                        <td>Iinformation</td>                        
+                        <!--<td>Iinformation</td>-->                        
                         <td>Created By</td> 
                         <td>dateCreation</td>
 
@@ -28,7 +30,7 @@
                                     <f:param name="doc_id" value="#{document.id}"/>                                    
                                 </h:link>                         
                             </td>
-                            <td>#{document.information}</td>
+<!--                            <td>#{document.information}</td>-->
                             <td>#{document.createdBy.firstName}</td> 
                             <td>#{document.dateCreation}</td> 
 

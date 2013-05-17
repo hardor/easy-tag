@@ -11,6 +11,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -51,12 +52,40 @@ public class AlbumBean implements Serializable {
             return;
         }
         //UserInfoBean ub = new UserInfoBean();      
-        am.createAlbum(helper.getUserId(), name, additional_info);
+        Album ab = am.createAlbum(helper.getUserId(), name, additional_info);
         helper.addMessage("album_messages", FacesMessage.SEVERITY_INFO, "Success ", "album " + getName() + " is create");
+        helper.getSession(true).setAttribute("alb_id", ab.getId());
+        helper.redirect("/user/docs/library.xhtml", "alb_id", ab.getId() + "");
+    }
+
+    public Album getAlbumById(Long alb_id) {
+        JSFHelper helper = getJSFHelper();
+        return am.getAlbumById(alb_id);
     }
 
     public List<Album> getAlbums() {
         return am.getAllAlbums();
+    }
+
+    public void deleteAlbum(Long album_id) {
+        am.deleteAlbum(album_id);
+    }
+
+    public void editAlbum() {
+    }
+
+    public String getAlbumName() {
+        JSFHelper helper = getJSFHelper();
+        String albumId = helper.getRequest().getParameter("alb_id");
+        Album ab = getAlbumById(Long.valueOf(albumId));
+        return ab.getName();
+    }
+
+    public void goAlbumPage() {
+        JSFHelper helper = getJSFHelper();
+        String albumId = helper.getRequest().getParameter("alb_id");
+        System.out.println(albumId);
+        helper.redirect("/user/docs/library.xhtml", "alb_id", albumId);
     }
 
     protected JSFHelper getJSFHelper() {

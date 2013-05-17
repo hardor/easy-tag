@@ -5,7 +5,7 @@
       xmlns:h="http://java.sun.com/jsf/html">
     <ui:composition>
         <ul id="sidebar_menu" class="navbar nav nav-list container full">
-            <li class="accordion-group active color_4"> <h:link class="dashboard" outcome="index"><img src="#{request.contextPath}/img/menu_icons/dashboard.png" /><span>Home Page</span></h:link> </li>
+            <li class="accordion-group active color_4"> <h:link class="dashboard" outcome="/user/index.xhtml"><img src="#{request.contextPath}/img/menu_icons/dashboard.png" /><span>Home Page</span></h:link> </li>
             <li class="accordion-group color_7"> <a class="accordion-toggle widgets collapsed " data-toggle="collapse" data-parent="#sidebar_menu" href="#{request.contextPath}/#collapse1"> <img src="#{request.contextPath}/img/menu_icons/forms.png" /><span>Profile</span></a>
                 <ul id="collapse1" class="accordion-body collapse">
                     <li><h:link outcome="/user/profile/index">View / Edit Profile</h:link></li>
