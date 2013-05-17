@@ -200,5 +200,37 @@ public class DocumentManager implements DocumentManagerLocal {
         }
         return tags;
     }
+
+    @Override
+    public List<Fragment> getAllFragments(Long userId, Long documentId) {
+        // check user
+        if (documentId == null || userId == null) {
+            return null;
+        }
+        
+        Document doc = em.find(Document.class, documentId);
+        if (doc == null || !userId.equals(doc.getCreatedBy().getUser_id())) {
+            return null;
+        }
+        
+        Query q = em.createQuery("select f from Fragment f where f.document.id = :doc_id", Fragment.class);
+        q.setParameter("doc_id", documentId);
+        return q.getResultList();
+    }
+
+    @Override
+    public void deleteFragment(Long userId, Long fragmentId) {
+        // check user
+        if (userId == null || fragmentId == null) {
+            return;
+        }
+        Fragment f = em.find(Fragment.class, fragmentId);
+        Document doc = f.getDocument();
+        if (doc != null && !userId.equals(doc.getCreatedBy().getUser_id())) {
+            return;
+        }
+        em.remove(f);
+    }
+    
     
 }

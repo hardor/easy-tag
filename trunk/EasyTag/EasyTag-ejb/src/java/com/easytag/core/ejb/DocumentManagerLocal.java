@@ -29,5 +29,9 @@ public interface DocumentManagerLocal {
     List<Document> getAllAlbumUsersDocuments(Long user_id, Long album_id); 
     
     Fragment addFragment(Long userId, Long documentId, String tag, long x, long y, long width, long height);
+
+    public List<Fragment> getAllFragments(Long userId, Long documentId);
+
+    public void deleteFragment(Long userId, Long fragmentId);
     
 }
