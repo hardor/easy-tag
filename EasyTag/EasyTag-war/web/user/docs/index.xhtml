@@ -33,9 +33,9 @@
                             <td>#{album.dateCreation}</td> 
                             <td>#{documentBean.NumDocInAlbum(album.id)}</td>
                             <td>
-                                <h:commandButton id="Edit" value="Edit" actionListener="#{albumBean.editAlbum()}">
-                                    <f:ajax execute="@this" render="@form"/>
-                                </h:commandButton>
+                                <h:link id="Edit" value="Edit" outcome="editAlbum" >
+                                     <f:param name="alb_id" value="#{album.id}"/>
+                                </h:link>
                             </td> 
                             <td>
                                 <h:commandButton id="Delete" value="Delete" actionListener="#{albumBean.deleteAlbum(album.id)}">

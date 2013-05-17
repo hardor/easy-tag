@@ -7,6 +7,7 @@ import com.easytag.core.jpa.entity.Tag;
 import com.easytag.core.jpa.entity.User;
 import com.easytag.core.util.CollectionUtils;
 import com.easytag.core.util.StringUtils;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -155,7 +156,7 @@ public class DocumentManager implements DocumentManagerLocal {
         if (!documents.isEmpty()) {
             return documents;
         } else {
-            return null;
+            return new ArrayList<Document>();
         }
     }
   
@@ -214,13 +215,14 @@ public class DocumentManager implements DocumentManagerLocal {
     @Override
     public List<Fragment> getAllFragments(Long userId, Long documentId) {
         // check user
+        List<Fragment> emptyList = new ArrayList();
         if (documentId == null || userId == null) {
-            return null;
+            return emptyList;
         }
         
         Document doc = em.find(Document.class, documentId);
         if (doc == null || !userId.equals(doc.getCreatedBy().getUser_id())) {
-            return null;
+            return emptyList;
         }
         
         Query q = em.createQuery("select f from Fragment f where f.document.id = :doc_id", Fragment.class);
@@ -245,9 +247,25 @@ public class DocumentManager implements DocumentManagerLocal {
     
     @Override
     public void deleteDocument(Long doc_id) {
+        System.out.println(doc_id+"2\n");
         Document de = this.getFileById(doc_id);
         if (de != null) {
             em.remove(de);
+        }
+    }
+    @Override
+    public Document modifyDocument (Long doc_id, String name, String information,Integer rating) {
+        if (doc_id == null) {
+            return null;
+        } else {
+            Document doc = em.find(Document.class, doc_id);
+            if (doc != null) {
+                doc.setName(name);
+                doc.setInformation(information); 
+                doc.setRating(rating);                
+                em.merge(doc);                
+            }
+            return doc;
         }
     }
 

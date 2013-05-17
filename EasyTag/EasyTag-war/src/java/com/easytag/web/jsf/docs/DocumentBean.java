@@ -98,10 +98,9 @@ public class DocumentBean implements Serializable {
         return docList.get(idx - 1);
     }
 
-    public void deleteDocument() {
-        JSFHelper helper = getJSFHelper();
-        Long docId = Long.valueOf(helper.getRequest().getParameter("doc_id"));
-        dm.deleteDocument(docId);
+    public void deleteDocument(Long doc_Id) {    
+        System.out.println(doc_Id+"\n");
+        dm.deleteDocument(doc_Id);
     }
 
     protected JSFHelper getJSFHelper() {

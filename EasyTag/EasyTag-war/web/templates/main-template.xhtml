@@ -33,12 +33,21 @@
                     <div class="overview collapse">
                         <div class="search row-fluid container">
                             <h2>Search</h2>
-                            <form class="form-search">
-                                <div class="input-append">
-                                    <input type="text" class=" search-query" placeholder="" />
-                                    <button class="btn_search color_4">Search</button>
-                                </div>
-                            </form>
+                            <h:form class="form-search" prependId="false">
+                                <h:panelGroup class="input-append">
+<!--                                <div class="input-append">-->
+<!--                                    <input type="text" class=" search-query" placeholder="" />-->
+                                    <h:inputText class=" search-query" value="#{fragmentSearchBean.searchQuery}" />
+                                    
+                                    
+                                    <h:commandButton id="search_button" class="btn_search color_4" action="#{fragmentSearchBean.goToSearch}" >
+                                        
+                                        Search</h:commandButton >
+<!--                                    <button class="btn_search color_4">Search</button>-->
+                                    
+<!--                                </div>-->
+                                    </h:panelGroup>
+                            </h:form>
                         </div>
                         <ui:include src="sidebar-menu.xhtml"/>
                         <div class="menu_states row-fluid container ">

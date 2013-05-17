@@ -11,14 +11,15 @@
             <h:link outcome="createDocument" value="Create new Document"><br/>
                 <f:param name="alb_id" value="#{param['alb_id']}"/>
             </h:link>
-          
+            <h:outputText value ="Album #{albumBean.albumName}"/>
             <h:form>
                 <table>
                     <tr>                       
                         <td>Name</td>
-                        <!--<td>Iinformation</td>-->                        
+                        <td>Iinformation</td>                        
                         <td>Created By</td> 
                         <td>dateCreation</td>
+                        <td>Delete Document</td>
 
                     </tr>
 
@@ -30,9 +31,14 @@
                                     <f:param name="doc_id" value="#{document.id}"/>                                    
                                 </h:link>                         
                             </td>
-<!--                            <td>#{document.information}</td>-->
+                            <td>#{document.information}</td>
                             <td>#{document.createdBy.firstName}</td> 
                             <td>#{document.dateCreation}</td> 
+                            <td>
+                                <h:commandButton  value="Delete" actionListener="#{documentBean.deleteDocument(document.id)}">
+                                    <f:ajax execute="@this" render="@form"/>
+                                </h:commandButton>
+                            </td>
 
                         </tr>                
                     </ui:repeat>

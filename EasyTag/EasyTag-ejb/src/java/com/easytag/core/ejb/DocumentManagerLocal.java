@@ -1,5 +1,6 @@
 package com.easytag.core.ejb;
 
+import com.easytag.core.jpa.entity.Album;
 import com.easytag.core.jpa.entity.Document;
 import com.easytag.core.jpa.entity.Fragment;
 import java.util.List;
@@ -39,4 +40,6 @@ public interface DocumentManagerLocal {
     public void deleteFragment(Long userId, Long fragmentId);
 
     void deleteDocument(Long doc_id);
+    
+    Document modifyDocument(Long doc_id, String name, String information,Integer rating);
 }
