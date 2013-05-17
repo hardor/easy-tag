@@ -69,6 +69,16 @@ public class DocumentManager implements DocumentManagerLocal {
         }
         return em.find(Document.class, fileId);
     }
+    
+    @Override
+    public Document getFileById(Long fileId) {
+       
+        Document f = em.find(Document.class, fileId);
+        if (f == null) {
+            return null;
+        }
+        return em.find(Document.class, fileId);
+    }
 
     @Override
     public Document getFileByUrl(Long userId, String Url) {
@@ -124,7 +134,7 @@ public class DocumentManager implements DocumentManagerLocal {
 
     @Override
     public List<Document> getAllAlbumDocuments(Long album_id) {
-        System.out.println("alb_id22=" + album_id);
+       
         Query q = em.createNamedQuery("Document.findByAlbum");
         q.setParameter("album_id", album_id);
         List<Document> documents = q.getResultList();
@@ -137,7 +147,7 @@ public class DocumentManager implements DocumentManagerLocal {
     
   @Override
     public List<Document> getAllAlbumUsersDocuments(Long user_id, Long album_id) {
-        System.out.println("alb_id22=" + album_id);
+       
         Query q = em.createNamedQuery("Document.findByAlbumAndUser");
         q.setParameter("album_id", album_id);
         q.setParameter("user_id", user_id);
@@ -232,5 +242,13 @@ public class DocumentManager implements DocumentManagerLocal {
         em.remove(f);
     }
     
+    
+    @Override
+    public void deleteDocument(Long doc_id) {
+        Document de = this.getFileById(doc_id);
+        if (de != null) {
+            em.remove(de);
+        }
+    }
     
 }

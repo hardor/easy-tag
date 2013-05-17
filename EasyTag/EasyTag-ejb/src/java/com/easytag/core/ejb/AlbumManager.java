@@ -1,6 +1,7 @@
 package com.easytag.core.ejb;
 
 import com.easytag.core.jpa.entity.Album;
+import com.easytag.core.jpa.entity.Document;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -29,10 +30,10 @@ public class AlbumManager implements AlbumManagerLocal {
         album.setName(albumName);
         album.setDateCreation(new java.sql.Date(new Date().getTime()));
         album.setAdditionalInfo(additional_info);
-        
+
         album.setUser(um.getUserById(user_id));
         em.persist(album);
-      
+
         return album;
     }
 
@@ -84,5 +85,16 @@ public class AlbumManager implements AlbumManagerLocal {
     @Override
     public Album modifyAlbum(Long userId, String name, String surname, String information, String email, String phone) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void deleteAlbum(Long album_id) {
+        Album ae = this.getAlbumById(album_id);
+        if (ae != null) {
+            Query q = em.createNamedQuery("Document.deletByAlbum", Document.class);
+            q.setParameter("album_id", album_id);
+            q.executeUpdate();
+            em.remove(ae);
+        }
     }
 }
