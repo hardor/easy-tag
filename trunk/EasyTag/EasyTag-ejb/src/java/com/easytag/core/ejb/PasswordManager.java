@@ -58,7 +58,7 @@ public class PasswordManager implements PasswordManagerLocal {
 
     @Override
     public boolean recoverPassword(Long userId) {
-        System.err.println("recoverPassword(): userId = "+userId);
+       
         if(userId == null)
             return false;
         UserPassword up = em.find(UserPassword.class, userId);

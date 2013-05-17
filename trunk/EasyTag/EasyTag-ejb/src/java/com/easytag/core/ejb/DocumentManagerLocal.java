@@ -18,6 +18,8 @@ public interface DocumentManagerLocal {
 
     Document getFileById(Long userId, Long fileId);
     
+    Document getFileById(Long fileId);
+    
     Document getFileByExtraInfo(Long userId, String extraInfo);
 
     Document getFileByUrl(Long userId, String Url);
@@ -34,4 +36,5 @@ public interface DocumentManagerLocal {
 
     public void deleteFragment(Long userId, Long fragmentId);
     
+    void deleteDocument(Long doc_id);
 }

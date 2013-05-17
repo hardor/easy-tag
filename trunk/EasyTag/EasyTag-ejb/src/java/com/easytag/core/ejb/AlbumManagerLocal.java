@@ -14,16 +14,18 @@ import javax.ejb.Local;
  */
 @Local
 public interface AlbumManagerLocal {
-    
-    Album createAlbum(Long user_id, String albumName,String additional_info);
+
+    Album createAlbum(Long user_id, String albumName, String additional_info);
 
     boolean removeAlbumById(Long albumId);
 
-    Album getAlbumById(Long albumId);   
+    Album getAlbumById(Long albumId);
 
     Album getAlbumByName(String albumName);
 
-    List<Album> getAllAlbums(); 
+    List<Album> getAllAlbums();
 
     Album modifyAlbum(Long userId, String name, String surname, String information, String email, String phone);
+
+    void deleteAlbum(Long album_id);
 }
