@@ -4,11 +4,12 @@
  */
 package com.easytag.web.search;
 
-
 import com.easytag.core.ejb.SearchManagerLocal;
 import com.easytag.core.jpa.entity.Fragment;
 import com.easytag.web.utils.JSFHelper;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -25,18 +26,18 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @ViewScoped
-public class FragmentSearchBean implements Serializable{
+public class FragmentSearchBean implements Serializable {
+
     @EJB
     private SearchManagerLocal searchManager;
-    
-    private JSFHelper helper;
+//    private JSFHelper helper;
     private String searchQuery;
+
     /**
      * Creates a new instance of FragmentSearchBean
      */
     public FragmentSearchBean() {
-        helper = new JSFHelper();
-        
+//        helper = new JSFHelper();
     }
 
     public String getSearchQuery() {
@@ -46,29 +47,41 @@ public class FragmentSearchBean implements Serializable{
     public void setSearchQuery(String searchQuery) {
         this.searchQuery = searchQuery;
     }
-    
-    public void startSearch(){
-        System.out.println("Search started, search query: "+searchQuery);
-        System.out.println(helper.getUserId());
-        Set<Fragment> fragments = searchManager.findFragmentsByQuery(searchQuery, helper.getUserId());
-        System.out.println(fragments);
+
+    public void startSearch() {
+        
     }
     
-    public String goToSearch(){
-       return  "search.xhtml?q="+searchQuery+"&faces-redirect=true";      
-       
+    public List<Fragment> getFragments() {
+       JSFHelper helper = getJSFHelper();
+        System.out.println("Search started, search query: " + searchQuery);
+       List<Fragment> fragments =new ArrayList();
+        Set<Fragment> fragments2 = searchManager.findFragmentsByQuery(searchQuery, helper.getUserId());
+        for (Fragment fragment : fragments2) {
+             System.out.println("\nFragment " + fragment);
+            fragments.add(fragment);
+        }
+      return fragments;
     }
-    
+
+    public String goToSearch() {
+        return "search.xhtml?q=" + searchQuery + "&faces-redirect=true";
+    }
+
+    public String getUrlQuery() {
+        JSFHelper helper = getJSFHelper();
+        return helper.getRequest().getParameter("q");
+    }
+
     @PostConstruct
     private void init() {
         JSFHelper helper = getJSFHelper();
-        String query = helper.getRequest().getParameter("q");   
+        String query = helper.getRequest().getParameter("q");
         setSearchQuery(query);
-        System.out.println("query: "+query);
+        System.out.println("query: " + query);
     }
-     
-     protected JSFHelper getJSFHelper() {
+
+    protected JSFHelper getJSFHelper() {
         return new JSFHelper();
     }
-    
 }

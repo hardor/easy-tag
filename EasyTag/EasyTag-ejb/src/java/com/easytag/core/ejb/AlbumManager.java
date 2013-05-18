@@ -4,6 +4,7 @@ import com.easytag.core.jpa.entity.Album;
 import com.easytag.core.jpa.entity.User;
 import java.util.ArrayList;
 import com.easytag.core.jpa.entity.Document;
+import com.easytag.core.jpa.entity.Fragment;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -25,6 +26,8 @@ public class AlbumManager implements AlbumManagerLocal {
     private EntityManager em;
     @EJB
     private UserManagerLocal um;
+    @EJB
+    private DocumentManagerLocal dm;
 
     @Override
     public Album createAlbum(Long user_id, String albumName, String additional_info) {
@@ -83,16 +86,17 @@ public class AlbumManager implements AlbumManagerLocal {
             return null;
         }
     }
-      
-    @Override    
-     public List<Album> getAlbumsByUser(User user){
-        List<Album> result = new ArrayList();
-        if(user == null) return result;
-        result = em.createQuery("SELECT a FROM Album a where a.user=:currentUser").setParameter("currentUser", user).getResultList();
-        System.out.println("user: "+user+"  his alboms: "+result);
-        return result;
-     }
 
+    @Override
+    public List<Album> getAlbumsByUser(User user) {
+        List<Album> result = new ArrayList();
+        if (user == null) {
+            return result;
+        }
+        result = em.createQuery("SELECT a FROM Album a where a.user=:currentUser").setParameter("currentUser", user).getResultList();
+        System.out.println("user: " + user + "  his alboms: " + result);
+        return result;
+    }
 
     @Override
     public Album modifyAlbum(Long album_id, String name, String information) {
@@ -102,8 +106,8 @@ public class AlbumManager implements AlbumManagerLocal {
             Album album = em.find(Album.class, album_id);
             if (album != null) {
                 album.setName(name);
-                album.setAdditionalInfo(information);           
-                em.merge(album);                
+                album.setAdditionalInfo(information);
+                em.merge(album);
             }
             return album;
         }
@@ -113,11 +117,19 @@ public class AlbumManager implements AlbumManagerLocal {
     public void deleteAlbum(Long album_id) {
         Album ae = this.getAlbumById(album_id);
         if (ae != null) {
+            List<Document> docs = new ArrayList();
+            docs = dm.getAllAlbumDocuments(album_id);
+            if (docs != null) {
+                for (Document doc : docs) {
+                    Query q = em.createNamedQuery("Fragment.deletByDocument", Fragment.class);
+                    q.setParameter("doc_id", doc.getId());
+                    q.executeUpdate();
+                }
+            }
             Query q = em.createNamedQuery("Document.deletByAlbum", Document.class);
             q.setParameter("album_id", album_id);
             q.executeUpdate();
             em.remove(ae);
         }
     }
-
 }
