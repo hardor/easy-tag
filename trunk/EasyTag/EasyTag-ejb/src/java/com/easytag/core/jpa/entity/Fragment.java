@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -19,6 +21,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "fragments")
+@NamedQueries({
+    @NamedQuery(name = "Fragment.deletByDocument", query = "DELETE FROM Fragment f WHERE f.document.id = :doc_id")
+})
 public class Fragment implements Serializable {
 
     private static final long serialVersionUID = 1L;

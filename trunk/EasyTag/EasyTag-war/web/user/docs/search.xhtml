@@ -7,10 +7,61 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition template="/templates/main-template.xhtml">
         <ui:define name="content">
-            <h:link outcome="index" value="My Albums"/><br/>  
-            <h:form>
-                <h:commandLink value="sfsdfs" actionListener="#{fragmentSearchBean.startSearch()}"/>
+            <h:link outcome="index" value="My Albums"/><br/> 
+
+            <h:form><table>
+                    <tr>
+                        <td>  
+                            <div class="form-actions row-fluid">
+                                <h:inputText value="#{fragmentSearchBean.searchQuery}" placeholder="#{fragmentSearchBean.urlQuery}"/>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-actions row-fluid">
+                                <h:commandLink value="Search" actionListener="#{fragmentSearchBean.startSearch()}"/>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </h:form>
+
+            <h:form>
+                <table cellpadding="0" cellspacing="0" border="1">
+                    <tr>                    
+                        <td>Search</td>
+                        <td>Information</td>                        
+                        <td>Rating</td>                        
+                        <td>Album</td>
+                        <td>User</td>
+                        <td>Image</td>
+
+                    </tr>
+
+                    <ui:repeat value="#{fragmentSearchBean.fragments}" var="fragment">
+                        <tr>        
+                            <td>#{fragment.name}</td>
+                            <td>#{fragment.information}</td>
+                            <td>#{fragment.rating}</td>
+                            <td>
+                                <h:link value="#{fragment.document.album.name}" outcome="/user/docs/library.xhtml">   
+                                    <f:param name="alb_id" value="#{fragment.document.album.id}"/>                                
+                                </h:link> 
+                            </td>
+                            <td>#{fragment.album.user.firstName}</td>
+                            <td>
+                                #{fragment.document.name}<br/>
+                                <h:link outcome="/user/docs/document">   
+                                    <h:graphicImage value="/file?id=#{fragment.document.id}" class="height_medium"/>
+                                    <f:param name="alb_id" value="#{fragment.document.album.id}"/>
+                                    <f:param name="doc_id" value="#{fragment.document.id}"/>   
+                                </h:link> 
+                            </td>
+
+                        </tr>                
+                    </ui:repeat>
+                </table>
+            </h:form>
+
         </ui:define>     
     </ui:composition>
 

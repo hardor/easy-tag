@@ -194,8 +194,8 @@
                                 //-91px -254px
 				//left_pos = parseInt(jtagdrag.offset().left) - 91 + border;
 				//top_pos =  parseInt(jtagdrag.offset().top) - 254 + border;
-                                left_pos = parseInt(jtagdrag.offset().left)  + border +341;
-				top_pos =  parseInt(jtagdrag.offset().top)  + border +254;
+                                left_pos = parseInt(jtagdrag.offset().left)  + border -91;
+				top_pos =  parseInt(jtagdrag.offset().top)  + border -254;
 				return "-"+left_pos+"px -"+top_pos+"px";
 			}
 			
@@ -280,8 +280,8 @@
 				width = $(this).parent().parent().width();
 				//top_pos = $(this).parent().parent().offset().top -254;
 				//left = $(this).parent().parent().offset().left -91;
-                                top_pos = $(this).parent().parent().offset().top +341;
-				left = $(this).parent().parent().offset().left+254;
+                                top_pos = $(this).parent().parent().offset().top -254;
+				left = $(this).parent().parent().offset().left-91;
 				
 				tagobj = obj.addTag(width,height,top_pos,left,label);
 				

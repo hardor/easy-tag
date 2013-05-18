@@ -7,6 +7,12 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition template="/templates/main-template.xhtml">
         <ui:define name="content">
+            <h:link outcome="index" value="My Albums"/><br/>  
+            <h:form>
+                <h:commandLink action="#{albumBean.goAlbumPage}" value="Back to #{albumBean.albumName} album">
+                    <f:param name="alb_id" value="#{param['alb_id']}"/>
+                </h:commandLink>  <br/>
+            </h:form>
             <div>
                 <div>
                     <div class="title">
