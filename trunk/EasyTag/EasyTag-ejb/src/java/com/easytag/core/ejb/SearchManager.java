@@ -71,7 +71,7 @@ public class SearchManager implements SearchManagerLocal {
      List<Fragment> possibleFragments = new ArrayList();
       if(user == null) return possibleFragments;
       
-     List<Album> userAlbums = am.getAlbumsByUser(user);
+     List<Album> userAlbums = am.getAlbumsByUser(user.getUser_id());
      for(Album al:userAlbums){
        List<Document> documentsByAlbum =  dm.getAllAlbumUsersDocuments(user.getUser_id(), al.getId());
        for(Document doc:documentsByAlbum){

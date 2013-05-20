@@ -88,7 +88,8 @@ public class AlbumManager implements AlbumManagerLocal {
     }
 
     @Override
-    public List<Album> getAlbumsByUser(User user) {
+    public List<Album> getAlbumsByUser(Long user_id) {
+        User user = um.getUserById(user_id);
         List<Album> result = new ArrayList();
         if (user == null) {
             return result;
@@ -97,7 +98,7 @@ public class AlbumManager implements AlbumManagerLocal {
         System.out.println("user: " + user + "  his alboms: " + result);
         return result;
     }
-
+    
     @Override
     public Album modifyAlbum(Long album_id, String name, String information) {
         if (album_id == null) {

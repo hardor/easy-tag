@@ -12,7 +12,7 @@
                         <h2 class="under">Registration form</h2>
                         <!--<div class="span5"><h:graphicImage  value="img/logo/logo(nofont)1.jpg"/> </div>-->
                         <h:form id="registration_form" method="post">
-                             <h:messages id="register_messages" title="Info" showDetail="true"/>
+                            <h:messages id="register_messages" title="Info" showDetail="true"/>
                             <div>
                                 <div  class="wrapper">
                                     <span>E-mail:</span>
@@ -36,6 +36,15 @@
                                 <a href="#" onClick="document.getElementById('registration_form').reset()">Clear</a>
                             </div>
                         </h:form>
+                    
+                    <div id="vk_auth"></div>
+                    <script src="http://userapi.com/js/api/openapi.js" type="text/javascript" charset="windows-1251"></script>
+                    <script type="text/javascript">
+                                    window.onload = function() {
+                                        VK.init({apiId: 3613659});
+                                        VK.Widgets.Auth('vk_auth', {width: "200px", authUrl: '/EasyTag-war/vk'});
+                                    }
+                    </script>
                     </section>
                     <section class="col2 pad_left1">
                         <h2 class="under">Welcome�! :)</h2>

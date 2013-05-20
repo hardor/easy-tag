@@ -21,7 +21,7 @@
 
                     </tr>
 
-                    <ui:repeat value="#{albumBean.albums}" var="album">
+                    <ui:repeat value="#{albumBean.albumsByUser}" var="album">
                         <tr>                        
                             <td>
                                 <h:link value="#{album.name}" outcome="library">
