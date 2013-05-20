@@ -12,5 +12,5 @@ public interface CoreConstants {
     // users
     long ADMIN_USER_ID      = 1L;
     //files
-    String DEFAULT_PATH = "C:/files";
+    String DEFAULT_PATH = "./";
 }
