@@ -28,7 +28,7 @@ public interface AlbumManagerLocal {
 
     Album modifyAlbum(Long album_id,String name,String information);
 
-    void deleteAlbum(Long album_id);
+    void deleteAlbum(Long album_id);   
     
-    List<Album> getAlbumsByUser(User user);
+   List<Album> getAlbumsByUser(Long user_id);
 }

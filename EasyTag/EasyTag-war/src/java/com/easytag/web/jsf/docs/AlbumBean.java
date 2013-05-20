@@ -59,12 +59,16 @@ public class AlbumBean implements Serializable {
     }
 
     public Album getAlbumById(Long alb_id) {
-        JSFHelper helper = getJSFHelper();
         return am.getAlbumById(alb_id);
     }
 
     public List<Album> getAlbums() {
         return am.getAllAlbums();
+    }
+
+    public List<Album> getAlbumsByUser() {
+        JSFHelper helper = getJSFHelper();
+        return am.getAlbumsByUser(helper.getUserId());
     }
 
     public void deleteAlbum(Long album_id) {
