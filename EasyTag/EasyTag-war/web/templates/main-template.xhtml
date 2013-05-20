@@ -34,19 +34,13 @@
                         <div class="search row-fluid container">
                             <h2>Search</h2>
                             <h:form class="form-search" prependId="false">
-                                <h:panelGroup class="input-append">
-<!--                                <div class="input-append">-->
+                                <div class="input-append">
 <!--                                    <input type="text" class=" search-query" placeholder="" />-->
-                                    <h:inputText class=" search-query" value="#{fragmentSearchBean.searchQuery}" />
+                                    <h:inputText id="searchQuery" class=" search-query" value="#{fragmentSearchBean.searchQuery}" />
                                     
+                                    <button class="btn_search color_4" onclick="window.location.href='#{request.contextPath}/user/docs/search.xhtml?q='+$('#searchQuery').val(); return false;">Search</button>
                                     
-                                    <h:commandButton id="search_button" class="btn_search color_4" action="#{fragmentSearchBean.goToSearch}" >
-                                        
-                                        Search</h:commandButton >
-<!--                                    <button class="btn_search color_4">Search</button>-->
-                                    
-<!--                                </div>-->
-                                    </h:panelGroup>
+                                </div>
                             </h:form>
                         </div>
                         <ui:include src="sidebar-menu.xhtml"/>

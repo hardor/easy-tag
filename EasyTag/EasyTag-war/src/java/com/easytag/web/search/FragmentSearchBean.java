@@ -65,7 +65,8 @@ public class FragmentSearchBean implements Serializable {
     }
 
     public String goToSearch() {
-        return "search.xhtml?q=" + searchQuery + "&faces-redirect=true";
+        new JSFHelper().redirect("/user/search.xhtml", "q", searchQuery);
+        return "/user/search?q=" + searchQuery + "&faces-redirect=true";
     }
 
     public String getUrlQuery() {
