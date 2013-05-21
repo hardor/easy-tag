@@ -2,7 +2,7 @@ package service;
 
 import com.easytag.core.ejb.DocumentManagerLocal;
 import com.easytag.core.jpa.entity.Fragment;
-import com.easytag.core.util.SessionHelper;
+import com.easytag.web.utils.SessionUtils;
 import com.google.gson.Gson;
 import java.util.List;
 import javax.annotation.Resource;
@@ -36,7 +36,7 @@ public class TagsREST {
             @Context HttpServletRequest request, 
             @QueryParam("tag_id") Long fragmentId
     ) {
-        Long userId = SessionHelper.getUserId(request.getSession());
+        Long userId = SessionUtils.getUserId(request.getSession());
         dm.deleteFragment(userId, fragmentId);
     }
     
@@ -47,7 +47,7 @@ public class TagsREST {
             @Context HttpServletRequest request, 
             @QueryParam("doc_id") Long id
     ) {
-        Long userId = SessionHelper.getUserId(request.getSession());
+        Long userId = SessionUtils.getUserId(request.getSession());
         List<Fragment> fragments = dm.getAllFragments(userId, id);
         return "{\"fragments\":" + new Gson().toJson(fragments) + "}";
     }
@@ -64,7 +64,7 @@ public class TagsREST {
             @QueryParam("width") Double width,
             @QueryParam("height") Double height
     ) {
-        Long userId = SessionHelper.getUserId(request.getSession());
+        Long userId = SessionUtils.getUserId(request.getSession());
         Fragment t = dm.addFragment(userId, documentId, tag, x.longValue(), y.longValue(), width.longValue(), height.longValue());
         if (t != null) {
             return "{\"fragmentId\": " + t.getId().toString() + "}";

@@ -4,6 +4,7 @@ import com.easytag.core.ejb.UserManagerLocal;
 import com.easytag.web.users.LoginBean;
 import com.easytag.web.users.UserInfoBean;
 import com.easytag.web.utils.JSFHelper;
+import com.easytag.web.utils.SessionUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -21,16 +22,8 @@ import javax.servlet.http.HttpSession;
 public class VkontakteOpenIdServlet extends HttpServlet {
 
     @EJB
-    private UserManagerLocal um;
-    
-    @ManagedProperty(value = "#{loginBean}")
-    private LoginBean loginB;
-
-    public void setLoginB(LoginBean loginB) {
-        this.loginB = loginB;
-    }
-    
-     
+    private UserManagerLocal um;  
+         
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -64,16 +57,12 @@ public class VkontakteOpenIdServlet extends HttpServlet {
            
             if (um.getUserByLogin(uid)==null){
                 um.createUser("", first_name, last_name, hash, uid,"", photo);
-                
-                session.setAttribute("user_id", um.getUserByLogin(uid).getUser_id());
-             //   loginB.setLoggedIn(true);
+                SessionUtils.setUserId(session, um.getUserByLogin(uid).getUser_id()); 
                 response.sendRedirect("user/index.xhtml");                
             }else{
-                session.setAttribute("user_id", um.getUserByLogin(uid).getUser_id());
-               // loginB.setLoggedIn(true);
+                SessionUtils.setUserId(session, um.getUserByLogin(uid).getUser_id());
                 response.sendRedirect("user/index.xhtml");                
             }       
-         
 
         } finally {
             out.close();

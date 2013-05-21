@@ -4,6 +4,7 @@ import com.easytag.core.ejb.UserManagerLocal;
 import com.easytag.core.jpa.entity.User;
 import com.easytag.core.util.EncryptionTools;
 import com.easytag.web.utils.JSFHelper;
+import com.easytag.web.utils.SessionUtils;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -22,16 +23,14 @@ public class LoginBean implements Serializable {
 
     @EJB
     private UserManagerLocal um;
-    
     private String login;
     private String password;
-    private boolean loggedIn;
 
     public void loginAction(final ActionEvent evt) {
         if (getLogin() == null || getPassword() == null) {
             return;
         }
-        
+
         logoutAction(evt);
 
         final JSFHelper helper = getJSFHelper();
@@ -41,12 +40,11 @@ public class LoginBean implements Serializable {
         if (ue != null) {
             if (EncryptionTools.SHA256(getPassword()).equals(um.getPasswordByLogin(getLogin()))) {
                 HttpSession session = helper.getSession(true);
-                session.setAttribute("user_id", ue.getUser_id());
+                SessionUtils.setUserId(session, ue.getUser_id());
                 helper.redirect("user/index.xhtml");
-                loggedIn = true;
                 // TODO: logging
             } else {
-           helper.addMessage("login_message", FacesMessage.SEVERITY_WARN, "WRONG", "Incorrect password");
+                helper.addMessage("login_message", FacesMessage.SEVERITY_WARN, "WRONG", "Incorrect password");
                 // TODO: logging
             }
         } else {
@@ -54,7 +52,7 @@ public class LoginBean implements Serializable {
             // TODO: logging
         }
     }
-    
+
     protected JSFHelper getJSFHelper() {
         return new JSFHelper();
     }
@@ -80,19 +78,15 @@ public class LoginBean implements Serializable {
     }
 
     public boolean isLoggedIn() {
-        return loggedIn;
-    }
-
-    public void setLoggedIn(boolean loggedIn) {
-        this.loggedIn = loggedIn;
+        JSFHelper helper = getJSFHelper();
+        return SessionUtils.isLoggedIn(helper.getRequest());
     }
 
     public void logoutAction(ActionEvent evt) {
-        if(isLoggedIn()) {
-            JSFHelper helper = getJSFHelper();
-            loggedIn = false;
+        JSFHelper helper = getJSFHelper();
+        if (SessionUtils.isLoggedIn(helper.getRequest())) {
             HttpSession session = helper.getSession(true);
-            session.setAttribute("user_id", null);
+            SessionUtils.setUserId(session, null);
             helper.redirect("/login");
         }
     }
