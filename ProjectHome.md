@@ -1,0 +1,1 @@
+We want to create a web-site where people will be able to upload their written lecture notes and books, tag fragments and search by tags quickly.
